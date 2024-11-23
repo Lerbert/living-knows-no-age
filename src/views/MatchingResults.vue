@@ -8,22 +8,41 @@
       <ul>
         <li v-for="student in students" :key="student.id" class="student-profile">
           <div class="profile-details">
-            <h4>{{ student.name }} - <span :class="getMatchClass(student.matchPercentage)">{{ getMatchText(student.matchPercentage) }}</span></h4>
+            <h4>
+              {{ student.name }} -
+              <span :class="getMatchClass(student.matchPercentage)">{{
+                getMatchText(student.matchPercentage)
+              }}</span>
+            </h4>
             <p><strong>Alter:</strong> {{ calculateAge(student.birthdate) }}</p>
             <p><strong>Studienfach:</strong> {{ student.fieldOfStudy }}</p>
-            <p><strong>Bevorzugter Standort:</strong> <span :class="{ 'preferred-location': student.preferredLocation === 'Schwabing' }">{{ student.preferredLocation }}</span></p>
-            <p><strong>Raucher:</strong> <span :class="{ 'no-smoking': student.smoker && !seniors[0].allowSmokers }">{{ student.smoker ? 'Ja' : 'Nein' }}</span></p>
+            <p>
+              <strong>Bevorzugter Standort:</strong>
+              <span :class="{ 'preferred-location': student.preferredLocation === 'Schwabing' }">{{
+                student.preferredLocation
+              }}</span>
+            </p>
+            <p>
+              <strong>Raucher:</strong>
+              <span :class="{ 'no-smoking': student.smoker && !seniors[0].allowSmokers }">{{
+                student.smoker ? 'Ja' : 'Nein'
+              }}</span>
+            </p>
             <p><strong>Hobbys:</strong> {{ student.hobbies.join(', ') }}</p>
             <p><strong>Bietet:</strong></p>
             <ul class="dot-list">
               <li v-for="offer in sortedOffers(student.offers)" :key="offer">
-                <span :class="{ match: seniors[0].wishes.includes(offer as TaskType) }">{{ offer }}</span>
+                <span :class="{ match: seniors[0].wishes.includes(offer as TaskType) }">{{
+                  offer
+                }}</span>
               </li>
             </ul>
             <p><strong>Wünsche:</strong></p>
             <ul class="dot-list">
               <li v-for="wish in sortedWishes(student.wishes)" :key="wish">
-                <span :class="{ match: seniors[0].offers.includes(wish as StudentWishType) }">{{ wish }}</span>
+                <span :class="{ match: seniors[0].offers.includes(wish as StudentWishType) }">{{
+                  wish
+                }}</span>
               </li>
             </ul>
           </div>
@@ -31,15 +50,17 @@
         </li>
       </ul>
     </div>
-    <button @click="generateContract" class="generate-contract-button">Neuen Vertrag erstellen</button>
+    <button @click="generateContract" class="generate-contract-button">
+      Neuen Vertrag erstellen
+    </button>
   </div>
 </template>
 
 <script setup lang="ts">
 import { ref, onMounted } from 'vue'
 import { students, seniors } from '../data/data'
-import type { TaskType } from '@/types/TaskType';
-import type { StudentWishType } from '@/types/StudentWishType';
+import type { TaskType } from '@/types/TaskType'
+import type { StudentWishType } from '@/types/StudentWishType'
 
 const calculateAge = (birthdate: string) => {
   const birthDate = new Date(birthdate)
@@ -70,7 +91,7 @@ const sortedOffers = (offers: string[]) => {
   return offers.slice().sort((a, b) => {
     const aMatch = seniors[0].wishes.includes(a as TaskType)
     const bMatch = seniors[0].wishes.includes(b as TaskType)
-    return (aMatch === bMatch) ? 0 : aMatch ? -1 : 1
+    return aMatch === bMatch ? 0 : aMatch ? -1 : 1
   })
 }
 
@@ -78,7 +99,7 @@ const sortedWishes = (wishes: string[]) => {
   return wishes.slice().sort((a, b) => {
     const aMatch = seniors[0].offers.includes(a as StudentWishType)
     const bMatch = seniors[0].offers.includes(b as StudentWishType)
-    return (aMatch === bMatch) ? 0 : aMatch ? -1 : 1
+    return aMatch === bMatch ? 0 : aMatch ? -1 : 1
   })
 }
 
@@ -136,7 +157,8 @@ ul {
   flex: 1;
 }
 
-h3, h4 {
+h3,
+h4 {
   margin: 0;
 }
 
@@ -209,7 +231,7 @@ p {
 }
 
 .preferred-location {
-    font-weight: bold;
+  font-weight: bold;
   color: darkgreen;
 }
 </style>

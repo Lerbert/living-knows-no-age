@@ -6,13 +6,14 @@ export class Student {
     public name: string,
     public phone: string,
     public birthdate: Date,
-    public fach: string,
-    public standort: string,
+    public fieldOfStudy: string,
+    public preferredLocation: string,
     public nationality: string,
-    public raucher: boolean,
-    public hobbies: string,
-    public tasks: TaskType[],
+    public smoker: boolean,
+    public hobbies: string[],
+    public offers: TaskType[],
     public wishes: StudentWishType[],
+    public image: string,
   ) {}
 
   get age(): number {
