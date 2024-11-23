@@ -25,14 +25,6 @@
             <label for="birthdate">Geburtsdatum</label>
             <input type="date" id="birthdate" v-model="formData.birthdate" />
           </div>
-          <div class="form-group">
-            <label for="nationality">Nationalität</label>
-            <input type="text" id="nationality" v-model="formData.nationality" placeholder="Nationalität" />
-          </div>
-          <div class="form-group">
-            <label for="religion">Religion</label>
-            <input type="text" id="religion" v-model="formData.religion" placeholder="Religion" />
-          </div>
           <div class="space-y-4">
           <div class="flex items-center space-x-8">
 
@@ -292,7 +284,7 @@ h2 {
 }
 
 .section h3 {
-  color: #007bff;
+  color: #000000;
   margin-bottom: 1rem;
 }
 
@@ -300,6 +292,7 @@ h2 {
   display: flex;
   flex-direction: column;
   gap: 0.5rem;
+  margin-top: 1rem;
 }
 
 .radio-group {
