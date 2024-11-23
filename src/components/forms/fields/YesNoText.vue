@@ -5,25 +5,25 @@
       <input
         class="form-check-input"
         type="radio"
-        name="yesNo"
-        id="noOption"
+        :name="id"
+        :id="`${id}-no`"
         :value="false"
         v-model="radioSelection"
         @change="updateModel"
       />
-      <label class="form-check-label" for="noOption">Nein</label>
+      <label class="form-check-label" :for="`${id}-no`">Nein</label>
     </div>
     <div class="form-check d-flex align-items-center">
       <input
         class="form-check-input"
         type="radio"
-        name="yesNo"
-        id="yesOption"
+        :name="id"
+        :id="`${id}-yes`"
         :value="true"
         v-model="radioSelection"
         @change="updateModel"
       />
-      <label class="form-check-label me-2" for="yesOption">Ja, und zwar</label>
+      <label class="form-check-label me-2" :for="`${id}-yes`">Ja</label>
       <div class="position-relative">
         <input
           type="text"
@@ -57,6 +57,7 @@
 import { ref, computed, defineEmits, defineProps, watch } from 'vue'
 
 interface Props {
+  id: string
   title: string
   modelValue: string | null
   placeholder?: string
