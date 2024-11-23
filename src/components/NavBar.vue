@@ -18,9 +18,6 @@
           <li class="nav-item">
             <RouterLink class="nav-link" to="/">Home</RouterLink>
           </li>
-          <li class="nav-item">
-            <RouterLink class="nav-link" to="/matching-results">Matching Results</RouterLink>
-          </li>
           <li class="nav-item dropdown">
             <a
               class="nav-link dropdown-toggle"
@@ -46,10 +43,10 @@
             </ul>
           </li>
           <li class="nav-item">
-            <RouterLink class="nav-link" to="/contract-creation">Vertrag erstellen</RouterLink>
+            <RouterLink class="nav-link" to="/matching-results">Matching Results</RouterLink>
           </li>
           <li class="nav-item">
-            <RouterLink class="nav-link" to="/contract-generator">Vertrag erstellen</RouterLink>
+            <RouterLink class="nav-link" to="/contract-creation">Vertrag erstellen</RouterLink>
           </li>
         </ul>
         <form class="d-flex">
