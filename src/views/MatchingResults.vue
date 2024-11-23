@@ -6,7 +6,7 @@
     </div>
     <div class="group">
       <ul>
-        <li v-for="student in sortedStudents" :key="student.name" class="student-profile" @mouseover="hover = student.id" @mouseleave="hover = null" @click="openMatched(student.name)">
+        <li v-for="student in sortedStudents" :key="student.name" class="student-profile" @mouseover="hover = student.name" @mouseleave="hover = null" @click="openMatched(student.name)">
           <div class="profile-details">
             <h4>
               {{ student.name }} -
@@ -110,7 +110,7 @@ const generateContract = () => {
   // Add logic to generate a new contract here
 }
 
-const hover = ref<number | null>(null)
+const hover = ref<string | null>(null)
 const router = useRouter()
 const matchStore = useMatchStore()
 

@@ -5,6 +5,7 @@ import MatchingResults from '../views/MatchingResults.vue'
 import ContractCreation from '../views/ContractCreation.vue'
 import ContractGenerator from '../views/ContractGenerator.vue'
 import Matched from '../views/Matched.vue'
+import OlderPersonRegistration from '../views/FormView.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -36,6 +37,11 @@ const router = createRouter({
       path: '/contract-creation',
       name: 'ContractCreation',
       component: ContractCreation
+    },
+    {
+      path: '/older-person-registration',
+      name: 'OlderPersonRegistration',
+      component: OlderPersonRegistration
     },
     {
       path: '/profile',
