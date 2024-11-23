@@ -118,6 +118,7 @@ import { StudentWishType } from '@/types/StudentWishType'
 import { TaskType } from '@/types/TaskType'
 import { usePeople } from '@/stores/PeopleStore'
 import { Student } from '@/types/Student'
+import DefaultImage from '@/images/default.jpg'
 
 interface Answer {
   name: string | null
@@ -210,7 +211,7 @@ const submitForm = () => {
     [answers.value.hobbies ?? ''],
     acceptedTasks,
     acceptedWishes,
-    '',
+    DefaultImage,
   )
   students.addStudent(student)
 }
