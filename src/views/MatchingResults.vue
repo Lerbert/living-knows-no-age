@@ -5,15 +5,14 @@
       <p>Die folgenden Studenten passen gut zu dem Profil von Gertrud!</p>
     </div>
     <div class="group">
-      <h3>Studenten</h3>
       <ul>
         <li v-for="student in students" :key="student.id" class="student-profile">
           <div class="profile-details">
             <h4>{{ student.name }} - <span :class="getMatchClass(student.matchPercentage)">{{ getMatchText(student.matchPercentage) }}</span></h4>
             <p><strong>Alter:</strong> {{ student.age }}</p>
             <p><strong>Studienfach:</strong> {{ student.fieldOfStudy }}</p>
-            <p><strong>Semester:</strong> {{ student.semester }}</p>
             <p><strong>Bevorzugter Standort:</strong> {{ student.preferredLocation }}</p>
+            <p><strong>Raucher:</strong> <span :class="{ 'no-smoking': student.smoker && !seniors[0].allowSmokers }">{{ student.smoker ? 'Ja' : 'Nein' }}</span></p>
             <p><strong>Hobbys:</strong> {{ student.hobbies.join(', ') }}</p>
             <p><strong>Bietet:</strong></p>
             <ul class="dot-list">
@@ -24,7 +23,7 @@
             <p><strong>Wünsche:</strong></p>
             <ul class="dot-list">
               <li v-for="wish in sortedWishes(student.wishes)" :key="wish">
-                <span :class="{ match: seniors[0].offers.includes(wish) }">{{ wish }}</span>
+                <span :class="{ match: seniors[0].offers.includes(wish as StudentWishType) }">{{ wish }}</span>
               </li>
             </ul>
           </div>
@@ -43,6 +42,7 @@ import { ref, onMounted } from 'vue'
 import MaximilianBauerImage from '../images/MaximilianBauer.jpg'
 import LenaMuellerImage from '../images/LenaMueller.jpg'
 import FelixFabelhaftImage from '../images/FelixFabelhaft.jpg'
+import SophieSchneiderImage from '../images/SophieSchneider.jpg'
 import { TaskType } from '../types/TaskType'
 import { StudentWishType } from '../types/StudentWishType'
 
@@ -53,8 +53,8 @@ const students = ref([
     matchPercentage: 95,
     age: 19,
     fieldOfStudy: 'Architektur',
-    semester: '1.',
     preferredLocation: 'Maxvorstadt',
+    smoker: false,
     hobbies: ['Klavier spielen', 'singen', 'wandern'],
     offers: [TaskType.Housework, TaskType.Maintenance, TaskType.Companionship],
     wishes: [StudentWishType.Cook, StudentWishType.Piano],
@@ -62,12 +62,12 @@ const students = ref([
   },
   {
     id: 2,
-    name: 'Lena Müller',
-    matchPercentage: 92,
+    name: 'Lina Jung',
+    matchPercentage: 89,
     age: 21,
     fieldOfStudy: 'Informatik',
-    semester: '3.',
     preferredLocation: 'Schwabing',
+    smoker: false,
     hobbies: ['programmieren', 'lesen', 'radfahren'],
     offers: [TaskType.ComputerSkills, TaskType.Handicrafts, TaskType.Companionship],
     wishes: [StudentWishType.StudyRoom],
@@ -79,8 +79,8 @@ const students = ref([
     matchPercentage: 89,
     age: 22,
     fieldOfStudy: 'Maschinenbau',
-    semester: '4.',
     preferredLocation: 'Garching',
+    smoker: false,
     hobbies: ['3D-Druck', 'Robotik', 'joggen'],
     offers: [TaskType.Maintenance, TaskType.Gardening, TaskType.Companionship],
     wishes: [StudentWishType.Workshop, StudentWishType.Garden],
@@ -89,15 +89,15 @@ const students = ref([
   {
     id: 4,
     name: 'Sophie Schneider',
-    matchPercentage: 87,
+    matchPercentage: 53,
     age: 20,
     fieldOfStudy: 'Medizin',
-    semester: '2.',
     preferredLocation: 'Haidhausen',
+    smoker: true,
     hobbies: ['ehrenamtliche Arbeit', 'malen', 'Yoga'],
     offers: [TaskType.EscortServices, TaskType.Companionship],
     wishes: [StudentWishType.StudyRoom],
-    image: 'https://via.placeholder.com/150'
+    image: SophieSchneiderImage // Update this line
   }
 ])
 
@@ -108,8 +108,9 @@ const seniors = ref([
     matchPercentage: 80,
     age: 86,
     preferredLocation: 'Schwabing',
-    offers: ['Zimmer mit 12m²', 'gelegentliches Kochen für den Studenten'],
-    wishes: [TaskType.Housework, TaskType.Maintenance, TaskType.ComputerSkills, TaskType.Companionship]
+    offers: [StudentWishType.StudyRoom, StudentWishType.Garden],
+    wishes: [TaskType.Housework, TaskType.Maintenance, TaskType.ComputerSkills, TaskType.Companionship],
+    allowSmokers: false
   }
 ])
 
@@ -137,8 +138,8 @@ const sortedOffers = (offers: string[]) => {
 
 const sortedWishes = (wishes: string[]) => {
   return wishes.slice().sort((a, b) => {
-    const aMatch = seniors.value[0].offers.includes(a)
-    const bMatch = seniors.value[0].offers.includes(b)
+    const aMatch = seniors.value[0].offers.includes(a as StudentWishType)
+    const bMatch = seniors.value[0].offers.includes(b as StudentWishType)
     return (aMatch === bMatch) ? 0 : aMatch ? -1 : 1
   })
 }
@@ -244,6 +245,10 @@ p {
 .dot-list {
   list-style-type: disc;
   padding-left: 1.5rem;
+}
+
+.no-smoking {
+  color: red;
 }
 </style>
 
