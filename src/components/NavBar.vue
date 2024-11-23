@@ -19,16 +19,31 @@
             <RouterLink class="nav-link" to="/">Home</RouterLink>
           </li>
           <li class="nav-item">
-            <RouterLink class="nav-link" to="/profile">Profile</RouterLink>
-          </li>
-          <li class="nav-item">
-            <RouterLink class="nav-link" to="/about">About</RouterLink>
-          </li>
-          <li class="nav-item">
             <RouterLink class="nav-link" to="/matching-results">Matching Results</RouterLink>
           </li>
-          <li class="nav-item">
-            <RouterLink class="nav-link" to="/student-registration">Student Registration</RouterLink>
+          <li class="nav-item dropdown">
+            <a
+              class="nav-link dropdown-toggle"
+              href="#"
+              id="navbarDropdown"
+              role="button"
+              data-bs-toggle="dropdown"
+              aria-expanded="false"
+            >
+              Registrierung
+            </a>
+            <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+              <li>
+                <RouterLink class="dropdown-item" to="/student-registration">
+                  Wohnraumsuchende
+                </RouterLink>
+              </li>
+              <li>
+                <RouterLink class="dropdown-item" to="/student-registration">
+                  Wohnraumgebende
+                </RouterLink>
+              </li>
+            </ul>
           </li>
           <li class="nav-item">
             <RouterLink class="nav-link" to="/contract-creation">Vertrag erstellen</RouterLink>
@@ -38,8 +53,8 @@
           </li>
         </ul>
         <form class="d-flex">
-          <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search" />
-          <button class="btn btn-outline-success" type="submit">Search</button>
+          <input class="form-control me-2" type="search" placeholder="Suche" aria-label="Suche" />
+          <button class="btn btn-outline-success" type="submit">Suche</button>
         </form>
       </div>
     </div>

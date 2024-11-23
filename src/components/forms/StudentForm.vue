@@ -59,13 +59,13 @@
           </div>
         </div>
         <div class="form-group row">
-          <YesNo id="raucher" title="Rauchen Sie?" v-model="answers.smoker" />
-        </div>
-        <div class="form-group row">
           <label for="phone" class="form-label">Hobbies</label>
           <div class="">
             <input type="text" class="form-control" id="phone" v-model="answers.hobbies" />
           </div>
+        </div>
+        <div class="form-group row">
+          <YesNo id="raucher" title="Rauchen Sie?" v-model="answers.smoker" />
         </div>
         <button type="button" class="btn btn-primary" @click="currentStage = Stage.Tasks">
           Weiter
@@ -107,7 +107,7 @@
       </div>
     </form>
   </div>
-  {{ answers }}
+  <!-- {{ answers }} -->
 </template>
 
 <script setup lang="ts">
@@ -119,6 +119,7 @@ import { TaskType } from '@/types/TaskType'
 import { usePeople } from '@/stores/PeopleStore'
 import { Student } from '@/types/Student'
 import DefaultImage from '@/images/default.jpg'
+import { useRouter } from 'vue-router'
 
 interface Answer {
   name: string | null
@@ -193,6 +194,8 @@ const answers = ref<Answer>({
 
 const students = usePeople()
 
+const router = useRouter()
+
 const submitForm = () => {
   const acceptedTasks = Object.entries(answers.value.offers)
     .filter(([, value]) => value === true)
@@ -214,6 +217,7 @@ const submitForm = () => {
     DefaultImage,
   )
   students.addStudent(student)
+  router.push('/')
 }
 </script>
 
