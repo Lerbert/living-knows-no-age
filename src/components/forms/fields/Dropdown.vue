@@ -2,7 +2,7 @@
   <div class="position-relative">
     <input
       type="text"
-      class="form-control"
+      class="form-control w-100"
       :placeholder="placeholder"
       v-model="inputValue"
       :disabled="disabled"

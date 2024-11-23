@@ -4,13 +4,13 @@
     <form @submit.prevent="submitForm">
       <h3>Persönliche Daten</h3>
       <div class="form-group row">
-        <label for="name" class="col-sm-3 col-form-label">Name, Vorname</label>
+        <label for="name" class="col-sm-3 col-form-label">Name</label>
         <div class="col-sm-9">
           <input type="text" class="form-control" id="name" v-model="answers.name" />
         </div>
       </div>
       <div class="form-group row">
-        <label for="phone" class="col-sm-3 col-form-label">Telefon/Handy</label>
+        <label for="phone" class="col-sm-3 col-form-label">Telefon</label>
         <div class="col-sm-9">
           <input type="text" class="form-control" id="phone" v-model="answers.phone" />
         </div>
@@ -33,24 +33,19 @@
           />
         </div>
       </div>
+      <YesNoText
+        id="student"
+        title="Studieren Sie derzeit?"
+        :options="fachrichtungen"
+        placeholder="Fachrichtung"
+        v-model="answers.student"
+      />
+      <YesNo id="raucher" title="Rauchen Sie?" v-model="answers.raucher" />
       <!--
-      birthday
-      nationalität
-      student + fachrichtung
-      raucher
       hobbies
       tätigkeiten
       was ist wichtig beim zusammenleben
       -->
-      <YesNoText
-        v-for="question in questions"
-        :key="question.id"
-        :id="question.id"
-        :title="question.title"
-        :options="question.options"
-        :placeholder="question.placeholder"
-        v-model="answers[question.id]"
-      />
       <button type="submit" class="btn btn-primary">Submit</button>
     </form>
   </div>
@@ -61,12 +56,15 @@
 import { ref } from 'vue'
 import YesNoText from './fields/YesNoText.vue'
 import Dropdown from './fields/Dropdown.vue'
+import YesNo from './fields/YesNo.vue'
 
-interface Question {
-  id: string
-  title: string
-  options: string[]
-  placeholder: string
+interface Answer {
+  name: string | null
+  phone: string | null
+  birthday: string | null
+  nationality: string | null
+  student: string | null
+  raucher: boolean | null
 }
 
 const nationalities = [
@@ -119,80 +117,24 @@ const nationalities = [
   'Neuseeländisch',
 ]
 
-const questions: Question[] = [
-  {
-    id: 'student',
-    title: 'Studieren Sie derzeit?',
-    options: [
-      'Informatik',
-      'BWL',
-      'Maschinenbau',
-      'Lebensmitteltechnologie',
-      'Biologie',
-      'Chemie',
-      'Medizin',
-    ].sort(),
-    placeholder: 'Fachrichtung',
-  },
-  {
-    id: 'ausbildung',
-    title: 'Haben Sie eine Ausbildung abgeschlossen?',
-    options: [
-      'Klemptner',
-      'Elektriker',
-      'Maler',
-      'Schreiner',
-      'Dachdecker',
-      'Fliesenleger',
-      'Maurer',
-      'Tischler',
-      'Zimmerer',
-      'Bäcker',
-      'Fleischer',
-    ].sort(),
-    placeholder: 'Berufsbezeichnung',
-  },
-  {
-    id: 'nebenjob',
-    title: 'Haben Sie einen Nebenjob?',
-    options: [
-      'Kellner',
-      'Softwareentwickler',
-      'Reinigungskraft',
-      'Verkäufer',
-      'Nachhilfelehrer',
-    ].sort(),
-    placeholder: 'Berufsbezeichnung',
-  },
-  {
-    id: 'wochenende',
-    title: 'Fahren Sie regelmäßig am Wochenende nach Hause?',
-    options: [],
-    placeholder: 'Wochenenden pro Monat',
-  },
-  {
-    id: 'semesterferien',
-    title: 'Sind Sie in den Semesterferien weg?',
-    options: [],
-    placeholder: 'Wochen',
-  },
-  {
-    id: 'einschraenkungen',
-    title: 'Gibt es körperliche oder physische Einschränkungen/Behinderungen?',
-    options: [],
-    placeholder: 'Beschreibung',
-  },
-]
+const fachrichtungen = [
+  'Informatik',
+  'BWL',
+  'Maschinenbau',
+  'Lebensmitteltechnologie',
+  'Biologie',
+  'Chemie',
+  'Medizin',
+].sort()
 
-const answers = ref<Record<string, string | null>>(
-  questions.reduce(
-    (acc, question) => {
-      acc[question.id] = null
-      return acc
-    },
-    { name: null, phone: null, nationality: null } as Record<string, string | null>,
-  ),
-)
+const answers = ref<Answer>({
+  name: null,
+  phone: null,
+  nationality: null,
+  raucher: null,
+  student: null,
+  birthday: null,
+})
 
 const submitForm = () => {
   console.log('Form submitted with answers:', answers.value)
