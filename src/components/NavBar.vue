@@ -46,10 +46,14 @@
             </ul>
           </li>
           <li class="nav-item">
+<<<<<<< HEAD
             <RouterLink class="nav-link" to="/contract-creation">Vertrag erstellen</RouterLink>
           </li>
           <li class="nav-item">
             <RouterLink class="nav-link" to="/contract-generator">Vertrag erstellen</RouterLink>
+=======
+            <RouterLink class="nav-link" to="/older-person-registration">Older person Registration</RouterLink>
+>>>>>>> 35eb704 (Version is now working)
           </li>
         </ul>
         <form class="d-flex">
