@@ -1,7 +1,7 @@
 <template>
   <div class="form-group row">
-    <label class="col-sm-3 col-form-label">{{ title }}</label>
-    <div class="col-sm-9">
+    <label class="form-label" id="title">{{ title }}</label>
+    <div>
       <div class="d-flex align-items-center">
         <div class="form-check me-4">
           <input
@@ -69,6 +69,12 @@ watch([radioSelection, additionalInput], updateModel)
 </script>
 
 <style scoped>
+#title {
+  font-weight: bold;
+  margin-bottom: 0.5rem;
+  color: #495057;
+}
+
 .form-check {
   margin-bottom: 10px;
 }

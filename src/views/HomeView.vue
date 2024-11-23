@@ -1,7 +1,3 @@
-<script setup lang="ts">
-import StudentForm from '@/components/forms/StudentForm.vue'
-</script>
+<script setup lang="ts"></script>
 
-<template>
-  <StudentForm />
-</template>
+<template></template>
