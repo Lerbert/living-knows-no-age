@@ -1,9 +1,9 @@
 <script setup lang="ts">
-import { useStudents } from '@/stores/StudentStore'
+import { usePeople } from '@/stores/PeopleStore'
 
-const students = useStudents()
+const people = usePeople()
 </script>
 
 <template>
-  {{ students.$state.students }}
+  {{ people.$state.students }}
 </template>

@@ -1,7 +1,7 @@
 import type { StudentWishType } from './StudentWishType'
 import type { TaskType } from './TaskType'
 
-export class Student {
+export class Senior {
   constructor(
     public name: string,
     public phone: string,

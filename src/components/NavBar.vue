@@ -22,22 +22,16 @@
             <RouterLink class="nav-link" to="/profile">Profile</RouterLink>
           </li>
           <li class="nav-item">
-            <RouterLink class="nav-link" to="/about">About</RouterLink>
+            <RouterLink class="nav-link" to="/student-registration">Student Registration</RouterLink>
           </li>
           <li class="nav-item">
             <RouterLink class="nav-link" to="/matching-results">Matching Results</RouterLink>
           </li>
           <li class="nav-item">
-            <RouterLink class="nav-link" to="/student-registration">Student Registration</RouterLink>
-          </li>
-          <li class="nav-item">
             <RouterLink class="nav-link" to="/contract-creation">Vertrag erstellen</RouterLink>
           </li>
           <li class="nav-item">
-            <RouterLink class="nav-link" to="/contract-generator">Vertrag erstellen</RouterLink>
-          </li>
-          <li class="nav-item">
-            <RouterLink class="nav-link" to="/matched">Matched</RouterLink>
+            <RouterLink class="nav-link" to="/about">About</RouterLink>
           </li>
         </ul>
         <form class="d-flex">

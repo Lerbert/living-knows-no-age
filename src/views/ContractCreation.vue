@@ -1,4 +1,3 @@
-
 <template>
   <div class="contract-creation">
     <h2>Vertragserstellung</h2>
@@ -7,8 +6,12 @@
 </template>
 
 <script setup lang="ts">
+import { useRouter } from 'vue-router';
+
+const router = useRouter();
+
 const generateContract = () => {
-  alert('Vertrag wurde generiert!');
+  router.push('/contract-generator');
 }
 </script>
 
