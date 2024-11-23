@@ -28,7 +28,12 @@ const router = createRouter({
       path: '/matching-results',
       name: 'MatchingResults',
       component: MatchingResults
-    }
+    },
+    {
+      path: '/profile',
+      name: 'profile',
+      component: () => import('../views/ProfileView.vue'),
+    },
   ],
 })
 
