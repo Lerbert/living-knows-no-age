@@ -1,6 +1,6 @@
 <template>
   <div class="form-container">
-    <h1>Registrierung für Wohnraumsuchende</h1>
+    <h2>Registrierung für Wohnraumsuchende</h2>
     <form @submit.prevent="submitForm">
       <div v-if="currentStage === Stage.PersonalData">
         <h3>Persönliche Daten</h3>
@@ -65,7 +65,7 @@
           </div>
         </div>
         <div class="form-group row">
-          <YesNo id="raucher" title="Rauchen Sie?" v-model="answers.smoker" />
+          <YesNo id="raucher" title="Sind Sie Nichtraucher?" v-model="answers.nonsmoker" />
         </div>
         <button type="button" class="btn btn-primary" @click="currentStage = Stage.Tasks">
           Weiter
@@ -128,7 +128,7 @@ interface Answer {
   fieldOfStudy: string | null
   preferredLocation: string | null
   nationality: string | null
-  smoker: boolean | null
+  nonsmoker: boolean | null
   hobbies: string | null
   offers: Record<TaskType, boolean | null>
   wishes: Record<StudentWishType, boolean | null>
@@ -186,7 +186,7 @@ const answers = ref<Answer>({
   fieldOfStudy: null,
   preferredLocation: null,
   nationality: null,
-  smoker: null,
+  nonsmoker: null,
   hobbies: null,
   offers: {} as Record<TaskType, boolean | null>,
   wishes: {} as Record<StudentWishType, boolean | null>,
@@ -210,7 +210,7 @@ const submitForm = () => {
     answers.value.fieldOfStudy ?? '',
     answers.value.preferredLocation ?? '',
     answers.value.nationality ?? '',
-    answers.value.smoker ?? false,
+    !(answers.value.nonsmoker ?? true),
     [answers.value.hobbies ?? ''],
     acceptedTasks,
     acceptedWishes,
@@ -225,13 +225,12 @@ const submitForm = () => {
 .form-container {
   display: flex;
   flex-direction: column;
+  justify-content: flex-start; /* Changed from center to flex-start */
   align-items: center;
-  padding: 20px;
-  background-color: #f8f9fa;
-  border-radius: 8px;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-  max-width: 1600px; /* Increase the maximum width */
-  margin: 0 auto; /* Center the container */
+  height: 100vh;
+  width: 100vw;
+  padding: 2rem;
+  box-sizing: border-box;
 }
 
 h1 {
