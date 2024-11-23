@@ -33,19 +33,32 @@
           />
         </div>
       </div>
-      <YesNoText
-        id="student"
-        title="Studieren Sie derzeit?"
-        :options="fachrichtungen"
-        placeholder="Fachrichtung"
-        v-model="answers.student"
-      />
-      <YesNo id="raucher" title="Rauchen Sie?" v-model="answers.raucher" />
-      <!--
-      hobbies
-      tätigkeiten
-      was ist wichtig beim zusammenleben
-      -->
+      <div class="form-group row">
+        <YesNoText
+          id="student"
+          title="Studieren Sie derzeit?"
+          :options="fachrichtungen"
+          placeholder="Fachrichtung"
+          v-model="answers.student"
+        />
+      </div>
+      <div class="form-group row">
+        <YesNo id="raucher" title="Rauchen Sie?" v-model="answers.raucher" />
+      </div>
+      <div class="form-group row">
+        <label for="phone" class="col-sm-3 col-form-label">Hobbies</label>
+        <div class="col-sm-9">
+          <input type="text" class="form-control" id="phone" v-model="answers.hobbies" />
+        </div>
+      </div>
+      <h3>Hilfeleistungen, die Sie anbieten können</h3>
+      <div class="form-group row" v-for="task in Object.values(TaskType)" :key="task">
+        <YesNo :id="task" :title="task" v-model="answers.tasks[task]" />
+      </div>
+      <h3>Wünsche zur Wohnpartnerschaft</h3>
+      <div class="form-group row" v-for="wish in Object.values(StudentWishType)" :key="wish">
+        <YesNo :id="wish" :title="wish" v-model="answers.wishes[wish]" />
+      </div>
       <button type="submit" class="btn btn-primary">Submit</button>
     </form>
   </div>
@@ -57,6 +70,8 @@ import { ref } from 'vue'
 import YesNoText from './fields/YesNoText.vue'
 import Dropdown from './fields/Dropdown.vue'
 import YesNo from './fields/YesNo.vue'
+import { StudentWishType } from '@/types/StudentWishType'
+import { TaskType } from '@/types/TaskType'
 
 interface Answer {
   name: string | null
@@ -65,6 +80,9 @@ interface Answer {
   nationality: string | null
   student: string | null
   raucher: boolean | null
+  hobbies: string | null
+  tasks: Record<TaskType, boolean | null>
+  wishes: Record<StudentWishType, boolean | null>
 }
 
 const nationalities = [
@@ -134,6 +152,9 @@ const answers = ref<Answer>({
   raucher: null,
   student: null,
   birthday: null,
+  hobbies: null,
+  tasks: {} as Record<TaskType, boolean | null>,
+  wishes: {} as Record<StudentWishType, boolean | null>,
 })
 
 const submitForm = () => {
