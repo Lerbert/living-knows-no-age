@@ -1,7 +1,47 @@
 <template>
   <div>
-    <h1>Student Form</h1>
+    <h1>Fragebogen WOHNRAUM-SUCHENDE</h1>
     <form @submit.prevent="submitForm">
+      <h3>Persönliche Daten</h3>
+      <div class="form-group row">
+        <label for="name" class="col-sm-3 col-form-label">Name, Vorname</label>
+        <div class="col-sm-9">
+          <input type="text" class="form-control" id="name" v-model="answers.name" />
+        </div>
+      </div>
+      <div class="form-group row">
+        <label for="phone" class="col-sm-3 col-form-label">Telefon/Handy</label>
+        <div class="col-sm-9">
+          <input type="text" class="form-control" id="phone" v-model="answers.phone" />
+        </div>
+      </div>
+      <div class="form-group row">
+        <label for="birthday" class="col-sm-3 col-form-label">Geburtstag</label>
+        <div class="col-sm-9">
+          <input type="date" class="form-control" id="birthday" v-model="answers.birthday" />
+        </div>
+      </div>
+      <div class="form-group row">
+        <label for="nationality" class="col-sm-3 col-form-label">Nationalität</label>
+        <div class="col-sm-9">
+          <Dropdown
+            v-model="answers.nationality"
+            id="nationality"
+            :placeholder="'Bitte wählen Sie'"
+            :options="nationalities"
+            :disabled="false"
+          />
+        </div>
+      </div>
+      <!--
+      birthday
+      nationalität
+      student + fachrichtung
+      raucher
+      hobbies
+      tätigkeiten
+      was ist wichtig beim zusammenleben
+      -->
       <YesNoText
         v-for="question in questions"
         :key="question.id"
@@ -20,6 +60,7 @@
 <script setup lang="ts">
 import { ref } from 'vue'
 import YesNoText from './fields/YesNoText.vue'
+import Dropdown from './fields/Dropdown.vue'
 
 interface Question {
   id: string
@@ -27,6 +68,56 @@ interface Question {
   options: string[]
   placeholder: string
 }
+
+const nationalities = [
+  'Deutsch',
+  'Österreichisch',
+  'Schweizerisch',
+  'Französisch',
+  'Italienisch',
+  'Spanisch',
+  'Portugiesisch',
+  'Niederländisch',
+  'Belgisch',
+  'Luxemburgisch',
+  'Dänisch',
+  'Schwedisch',
+  'Norwegisch',
+  'Finnisch',
+  'Polnisch',
+  'Tschechisch',
+  'Slowakisch',
+  'Ungarisch',
+  'Rumänisch',
+  'Bulgarisch',
+  'Griechisch',
+  'Türkisch',
+  'Russisch',
+  'Ukrainisch',
+  'Chinesisch',
+  'Japanisch',
+  'Koreanisch',
+  'Indisch',
+  'Pakistanisch',
+  'Afghanisch',
+  'Iranisch',
+  'Irakisch',
+  'Syrisch',
+  'Libanesisch',
+  'Israelisch',
+  'Ägyptisch',
+  'Marokkanisch',
+  'Tunesisch',
+  'Algerisch',
+  'Kanadisch',
+  'Amerikanisch',
+  'Mexikanisch',
+  'Brasilianisch',
+  'Argentinisch',
+  'Chilenisch',
+  'Australisch',
+  'Neuseeländisch',
+]
 
 const questions: Question[] = [
   {
@@ -99,7 +190,7 @@ const answers = ref<Record<string, string | null>>(
       acc[question.id] = null
       return acc
     },
-    {} as Record<string, string | null>,
+    { name: null, phone: null, nationality: null } as Record<string, string | null>,
   ),
 )
 
