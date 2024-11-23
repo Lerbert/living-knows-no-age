@@ -29,10 +29,9 @@ export class Student {
 
   public matchPercentage(senior: Senior) {
     const smoke = this.smoker && !senior.allowSmokers ? 0 : 1
-    const seniorWishes =
-      senior.wishes.filter((wish) => this.offers.includes(wish)).length / senior.wishes.length
-    const studentWishes =
-      this.wishes.filter((wish) => senior.offers.includes(wish)).length / this.wishes.length
-    return ((smoke + seniorWishes + studentWishes) * 100) / 3
+    const seniorWishes = senior.wishes.filter((wish) => this.offers.includes(wish)).length
+    const studentWishes = this.wishes.filter((wish) => senior.offers.includes(wish)).length
+    const wishes = (seniorWishes + studentWishes) / (this.wishes.length + senior.wishes.length)
+    return (0.3 * smoke + 0.7 * wishes) * 100
   }
 }
