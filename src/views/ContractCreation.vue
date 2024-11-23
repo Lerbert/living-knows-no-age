@@ -20,9 +20,12 @@ const generateContract = () => {
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
+  justify-content: flex-start; /* Align content to the top */
   height: 100vh;
   text-align: center;
+  padding: 1rem; /* Add padding to prevent content from being cut off */
+  box-sizing: border-box; /* Ensure padding is included in the element's total width and height */
+  width: 100%;
 }
 
 button {
