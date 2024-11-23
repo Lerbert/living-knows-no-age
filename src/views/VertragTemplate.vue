@@ -18,12 +18,11 @@ Das Zimmer ist möbliert.</p>
     <p>Die Nebenkosten betragen 80€. In den Nebenkosten ist die Beteiligung an folgenden Kosten enthalten:</p>
     <p>Gas (Heizung, Warmwasser), elektrischer Strom, Wasser, Abwasser, Grundsteuer, Versicherung, Kaminkehrer, Wartung der Heizung, Müllentsorgung, W-LAN, Rundfunkgebühr. Der Mieter verpflichtet sich mit Heizung, Warmwasser und Strom angemessen sparsam umzugehen.</p>
     
-    <h2>Übereinstimmende Angebote und Wünsche</h2>
-    <p><strong>Aufgaben des Mieters:</strong></p>
+    <h2>Aufgaben des Mieters:</h2>
     <ul>
       <li v-for="offer in matchedOffers" :key="offer">{{ offer }}</li>
     </ul>
-    <p><strong>Angebote des Vermieters:</strong></p>
+    <h2>Angebote des Vermieters:</h2>
     <ul>
       <li v-for="wish in senior.offers" :key="wish">{{ wish }}</li>
     </ul>

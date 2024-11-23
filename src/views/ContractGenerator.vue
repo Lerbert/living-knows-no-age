@@ -33,9 +33,11 @@ const downloadContract = async () => {
   align-items: center;
   justify-content: flex-start; /* Align content to the top */
   width: 100%;
-  height: 100vh;
+  height: auto; /* Change height to auto */
+  min-height: 100vh; /* Ensure it takes at least the full viewport height */
   padding: 1rem;
   box-sizing: border-box;
+  padding-bottom: 2rem; /* Add padding to the bottom */
 }
 
 .contract-template {
@@ -52,6 +54,7 @@ const downloadContract = async () => {
   border-radius: 4px;
   cursor: pointer;
   margin-top: 1rem;
+  margin-bottom: 2rem; /* Add margin to the bottom */
 }
 
 .generate-contract-button:hover {
