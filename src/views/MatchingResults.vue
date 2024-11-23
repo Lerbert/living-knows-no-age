@@ -2,45 +2,45 @@
   <div class="matching-results">
     <h2>Abgleich erfolgreich!</h2>
     <div class="greeting">
-      <p>Die folgenden Studenten passen gut zu dem Profil von Gertrud!</p>
+      <p>Die folgenden Studenten passen gut zu dem Profil von {{ senior.name }}!</p>
     </div>
     <div class="group">
       <ul>
-        <li v-for="student in students" :key="student.id" class="student-profile">
+        <li v-for="student in students.$state.students" :key="student.name" class="student-profile">
           <div class="profile-details">
             <h4>
               {{ student.name }} -
-              <span :class="getMatchClass(student.matchPercentage)">{{
-                getMatchText(student.matchPercentage)
+              <span :class="getMatchClass(student.matchPercentage(senior))">{{
+                getMatchText(student.matchPercentage(senior))
               }}</span>
             </h4>
-            <p><strong>Alter:</strong> {{ calculateAge(student.birthdate) }}</p>
+            <p><strong>Alter: </strong> {{ student.age }}</p>
             <p><strong>Studienfach:</strong> {{ student.fieldOfStudy }}</p>
             <p>
-              <strong>Bevorzugter Standort:</strong>
+              <strong>Bevorzugter Standort: </strong>
               <span :class="{ 'preferred-location': student.preferredLocation === 'Schwabing' }">{{
                 student.preferredLocation
               }}</span>
             </p>
             <p>
-              <strong>Raucher:</strong>
-              <span :class="{ 'no-smoking': student.smoker && !seniors[0].allowSmokers }">{{
+              <strong>Raucher: </strong>
+              <span :class="{ 'no-smoking': student.smoker && !senior.allowSmokers }">{{
                 student.smoker ? 'Ja' : 'Nein'
               }}</span>
             </p>
-            <p><strong>Hobbys:</strong> {{ student.hobbies.join(', ') }}</p>
-            <p><strong>Bietet:</strong></p>
+            <p><strong>Hobbys: </strong> {{ student.hobbies.join(', ') }}</p>
+            <p><strong>Bietet: </strong></p>
             <ul class="dot-list">
               <li v-for="offer in sortedOffers(student.offers)" :key="offer">
-                <span :class="{ match: seniors[0].wishes.includes(offer as TaskType) }">{{
+                <span :class="{ match: senior.wishes.includes(offer as TaskType) }">{{
                   offer
                 }}</span>
               </li>
             </ul>
-            <p><strong>Wünsche:</strong></p>
+            <p><strong>Wünsche: </strong></p>
             <ul class="dot-list">
               <li v-for="wish in sortedWishes(student.wishes)" :key="wish">
-                <span :class="{ match: seniors[0].offers.includes(wish as StudentWishType) }">{{
+                <span :class="{ match: senior.offers.includes(wish as StudentWishType) }">{{
                   wish
                 }}</span>
               </li>
@@ -57,21 +57,24 @@
 </template>
 
 <script setup lang="ts">
-import { ref, onMounted } from 'vue'
-import { students, seniors } from '../data/data'
-import type { TaskType } from '@/types/TaskType'
-import type { StudentWishType } from '@/types/StudentWishType'
+import { onMounted } from 'vue'
+import { seniors } from '../data/data'
+import { TaskType } from '@/types/TaskType'
+import { StudentWishType } from '@/types/StudentWishType'
+import { useStudents } from '@/stores/StudentStore'
+import { Senior } from '@/types/Senior'
 
-const calculateAge = (birthdate: string) => {
-  const birthDate = new Date(birthdate)
-  const today = new Date('2024-11-01')
-  let age = today.getFullYear() - birthDate.getFullYear()
-  const monthDiff = today.getMonth() - birthDate.getMonth()
-  if (monthDiff < 0 || (monthDiff === 0 && today.getDate() < birthDate.getDate())) {
-    age--
-  }
-  return age
-}
+const students = useStudents()
+
+const senior = new Senior(
+  'Gertrud Gabel',
+  '+49 89 2784331',
+  new Date('1938-03-27'),
+  'Schwabing',
+  [StudentWishType.StudyRoom, StudentWishType.Garden, StudentWishType.Piano],
+  [TaskType.Housework, TaskType.Maintenance, TaskType.ComputerSkills, TaskType.Companionship],
+  false,
+)
 
 const getMatchText = (percentage: number) => {
   if (percentage >= 90) return 'Sehr gute Übereinstimmung'
@@ -89,16 +92,16 @@ const getMatchClass = (percentage: number) => {
 
 const sortedOffers = (offers: string[]) => {
   return offers.slice().sort((a, b) => {
-    const aMatch = seniors[0].wishes.includes(a as TaskType)
-    const bMatch = seniors[0].wishes.includes(b as TaskType)
+    const aMatch = senior.wishes.includes(a as TaskType)
+    const bMatch = senior.wishes.includes(b as TaskType)
     return aMatch === bMatch ? 0 : aMatch ? -1 : 1
   })
 }
 
 const sortedWishes = (wishes: string[]) => {
   return wishes.slice().sort((a, b) => {
-    const aMatch = seniors[0].offers.includes(a as StudentWishType)
-    const bMatch = seniors[0].offers.includes(b as StudentWishType)
+    const aMatch = senior.offers.includes(a as StudentWishType)
+    const bMatch = senior.offers.includes(b as StudentWishType)
     return aMatch === bMatch ? 0 : aMatch ? -1 : 1
   })
 }
