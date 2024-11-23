@@ -1,3 +1,4 @@
+import type { Senior } from './Senior'
 import type { StudentWishType } from './StudentWishType'
 import type { TaskType } from './TaskType'
 
@@ -17,7 +18,21 @@ export class Student {
   ) {}
 
   get age(): number {
-    const now = new Date()
-    return now.getFullYear() - this.birthdate.getFullYear()
+    const today = new Date()
+    let age = today.getFullYear() - this.birthdate.getFullYear()
+    const monthDiff = today.getMonth() - this.birthdate.getMonth()
+    if (monthDiff < 0 || (monthDiff === 0 && today.getDate() < this.birthdate.getDate())) {
+      age--
+    }
+    return age
+  }
+
+  public matchPercentage(senior: Senior) {
+    const smoke = this.smoker && !senior.allowSmokers ? 0 : 1
+    const seniorWishes =
+      senior.wishes.filter((wish) => this.offers.includes(wish)).length / senior.wishes.length
+    const studentWishes =
+      this.wishes.filter((wish) => senior.offers.includes(wish)).length / this.wishes.length
+    return ((smoke + seniorWishes + studentWishes) * 100) / 3
   }
 }

@@ -214,9 +214,10 @@ const submitForm = () => {
     'standort',
     answers.value.nationality ?? '',
     answers.value.raucher ?? false,
-    answers.value.hobbies ?? '',
+    [answers.value.hobbies ?? ''],
     acceptedTasks,
     acceptedWishes,
+    '',
   )
   students.addStudent(student)
 }
