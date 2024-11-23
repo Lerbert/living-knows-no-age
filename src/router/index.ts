@@ -2,6 +2,8 @@ import { createRouter, createWebHistory } from 'vue-router'
 import HomeView from '../views/HomeView.vue'
 import StudentRegistration from '../components/StudentRegistration.vue'
 import MatchingResults from '../views/MatchingResults.vue'
+import ContractCreation from '../views/ContractCreation.vue'
+import ContractGenerator from '../views/ContractGenerator.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -30,9 +32,19 @@ const router = createRouter({
       component: MatchingResults
     },
     {
+      path: '/contract-creation',
+      name: 'ContractCreation',
+      component: ContractCreation
+    },
+    {
       path: '/profile',
       name: 'profile',
       component: () => import('../views/ProfileView.vue'),
+    },
+    {
+      path: '/contract-generator',
+      name: 'ContractGenerator',
+      component: ContractGenerator
     },
   ],
 })
