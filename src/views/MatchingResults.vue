@@ -6,7 +6,7 @@
     </div>
     <div class="group">
       <ul>
-        <li v-for="student in students" :key="student.id" class="student-profile">
+        <li v-for="student in students" :key="student.id" class="student-profile" @mouseover="hover = student.id" @mouseleave="hover = null" @click="openMatched(student.name)">
           <div class="profile-details">
             <h4>
               {{ student.name }} -
@@ -23,7 +23,7 @@
               }}</span>
             </p>
             <p>
-              <strong>Raucher:</strong>
+              <strong>Raucher :</strong>
               <span :class="{ 'no-smoking': student.smoker && !seniors[0].allowSmokers }">{{
                 student.smoker ? 'Ja' : 'Nein'
               }}</span>
@@ -50,14 +50,13 @@
         </li>
       </ul>
     </div>
-    <button @click="generateContract" class="generate-contract-button">
-      Neuen Vertrag erstellen
-    </button>
   </div>
 </template>
 
 <script setup lang="ts">
 import { ref, onMounted } from 'vue'
+import { useRouter } from 'vue-router'
+import { useMatchStore } from '@/store/matchStore'
 import { students, seniors } from '../data/data'
 import type { TaskType } from '@/types/TaskType'
 import type { StudentWishType } from '@/types/StudentWishType'
@@ -108,6 +107,15 @@ const generateContract = () => {
   // Add logic to generate a new contract here
 }
 
+const hover = ref<number | null>(null)
+const router = useRouter()
+const matchStore = useMatchStore()
+
+const openMatched = (studentName: string) => {
+  matchStore.setStudentName(studentName)
+  router.push({ name: 'Matched' })
+}
+
 onMounted(() => {
   console.log('MatchingResults component has been mounted')
 })
@@ -144,6 +152,13 @@ ul {
   border-radius: 8px;
   background-color: #f9f9f9;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s, box-shadow 0.3s;
+  cursor: pointer;
+}
+
+.student-profile:hover {
+  transform: scale(1.05);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
 
 .profile-image {

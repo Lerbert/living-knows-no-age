@@ -36,6 +36,9 @@
           <li class="nav-item">
             <RouterLink class="nav-link" to="/contract-generator">Vertrag erstellen</RouterLink>
           </li>
+          <li class="nav-item">
+            <RouterLink class="nav-link" to="/matched">Matched</RouterLink>
+          </li>
         </ul>
         <form class="d-flex">
           <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search" />

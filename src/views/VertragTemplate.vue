@@ -1,55 +1,61 @@
 <template>
   <div class="contract-template">
     <h1 class="title">Mietvertrag</h1>
-    <p><strong>Zwischen:</strong></p>
-    <p>Senior: Gertrud Gabel</p>
-    <p>Student: Felix Fabelhaft</p>
+    <h2>Vermieter</h2>
+    <p>Gertrud Gabel</p>
+    <h2>Mieter</h2>
+    <p>Felix Fabelhaft</p>
+    <p> </p>
+    <p>Zwischen dem Mieter und dem Vermieter wird folgender Mietvertrag geschlossen.</p>
     
-    <h2>Vertragsdetails</h2>
-    <p><strong>Geburtsdatum der Seniorin:</strong> 23.06.1938</p>
-    <p><strong>Geburtsdatum des Studenten:</strong> 15.10.2005</p>
-    <p><strong>Hausstandort:</strong> Schwabing</p> <!-- Updated to use actual house location -->
+    <h2>Mietobjekt</h2>
+    <p>Ein Zimmer im Anwesen {{ senior.address }}
+Sowie Mitbenutzung von Küche, Bad und Gemeinschaftsraum.
+Zimmergröße: {{ senior.roomSize }} m²
+Das Zimmer ist möbliert.</p>
+
+    <h2>Nebenkosten</h2>
+    <p>Die Nebenkosten betragen 80€. In den Nebenkosten ist die Beteiligung an folgenden Kosten enthalten:</p>
+    <p>Gas (Heizung, Warmwasser), elektrischer Strom, Wasser, Abwasser, Grundsteuer, Versicherung, Kaminkehrer, Wartung der Heizung, Müllentsorgung, W-LAN, Rundfunkgebühr. Der Mieter verpflichtet sich mit Heizung, Warmwasser und Strom angemessen sparsam umzugehen.</p>
     
     <h2>Übereinstimmende Angebote und Wünsche</h2>
-    <p><strong>Angebote des Studenten:</strong></p>
+    <p><strong>Aufgaben des Mieters:</strong></p>
     <ul>
       <li v-for="offer in matchedOffers" :key="offer">{{ offer }}</li>
     </ul>
-    <p><strong>Wünsche der Seniorin:</strong></p>
+    <p><strong>Angebote des Vermieters:</strong></p>
     <ul>
-      <li v-for="wish in matchedWishes" :key="wish">{{ wish }}</li>
+      <li v-for="wish in senior.offers" :key="wish">{{ wish }}</li>
     </ul>
-    
-    <h2>Weitere Details</h2>
-    <p><strong>Raucher:</strong> Nein</p>
-    <p><strong>Hobbys des Studenten:</strong> Klavier spielen, singen, wandern</p>
     
     <h2>Kündigung</h2>
     <p>Die Kündigungsfrist beträgt 3 Monate. Während der Probezeit, die sich über die ersten vier Wochen erstreckt, beträgt die Kündigungsfrist eine Woche.</p>
     
-    <h2>Sonstige Vereinbarungen</h2>
-    <p>[Weitere Vereinbarungen]</p>
-    
     <h2>Unterschriften</h2>
-    <p><strong>Senior:\t</strong> ___________________________</p>
-    <p><strong>Student:\t</strong> ___________________________</p>
+    <div class="row">
+      <div class="col-md-6">
+        <p><strong>Vermieter:</strong> ___________________________</p>
+      </div>
+      <div class="col-md-6">
+        <p><strong>Mieter:</strong> ___________________________</p>
+      </div>
+    </div>
   </div>
 </template>
 
 <script setup lang="ts">
 import { ref } from 'vue'
-import { TaskType } from '../types/TaskType'
-import { StudentWishType } from '../types/StudentWishType'
+import { students, seniors } from '../data/data'
 
-const matchedOffers = ref([
-  TaskType.Housework,
-  TaskType.Maintenance,
-  TaskType.Companionship
-])
+const student = students[0]
+const senior = seniors[0]
 
-const matchedWishes = ref([
-  StudentWishType.Piano
-])
+const matchedOffers = ref(student.offers.filter(offer => senior.wishes.includes(offer)))
+
+const formatDate = (date: string) => {
+  const options: Intl.DateTimeFormatOptions = { year: 'numeric', month: '2-digit', day: '2-digit' }
+  return new Date(date).toLocaleDateString('de-DE', options)
+}
 </script>
 
 <style scoped>
