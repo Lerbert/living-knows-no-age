@@ -1,3 +1,9 @@
-<script setup lang="ts"></script>
+<script setup lang="ts">
+import { useStudents } from '@/stores/StudentStore'
 
-<template></template>
+const students = useStudents()
+</script>
+
+<template>
+  {{ students.$state.students }}
+</template>

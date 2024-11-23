@@ -102,11 +102,13 @@ import Dropdown from './fields/Dropdown.vue'
 import YesNo from './fields/YesNo.vue'
 import { StudentWishType } from '@/types/StudentWishType'
 import { TaskType } from '@/types/TaskType'
+import { useStudents } from '@/stores/StudentStore'
+import { Student } from '@/types/Student'
 
 interface Answer {
   name: string | null
   phone: string | null
-  birthday: string | null
+  birthday: Date | null
   nationality: string | null
   student: string | null
   raucher: boolean | null
@@ -195,8 +197,28 @@ const answers = ref<Answer>({
   wishes: {} as Record<StudentWishType, boolean | null>,
 })
 
+const students = useStudents()
+
 const submitForm = () => {
-  console.log('Form submitted with answers:', answers.value)
+  const acceptedTasks = Object.entries(answers.value.tasks)
+    .filter(([, value]) => value === true)
+    .map(([key]) => key)
+  const acceptedWishes = Object.entries(answers.value.wishes)
+    .filter(([, value]) => value === true)
+    .map(([key]) => key)
+  const student = new Student(
+    answers.value.name ?? '',
+    answers.value.phone ?? '',
+    answers.value.birthday ?? new Date(),
+    'fach',
+    'standort',
+    answers.value.nationality ?? '',
+    answers.value.raucher ?? false,
+    answers.value.hobbies ?? '',
+    acceptedTasks,
+    acceptedWishes,
+  )
+  students.addStudent(student)
 }
 </script>
 
