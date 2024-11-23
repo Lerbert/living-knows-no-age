@@ -4,6 +4,7 @@ import StudentRegistration from '../components/StudentRegistration.vue'
 import MatchingResults from '../views/MatchingResults.vue'
 import ContractCreation from '../views/ContractCreation.vue'
 import ContractGenerator from '../views/ContractGenerator.vue'
+import Matched from '../views/Matched.vue'
 import OlderPersonRegistration from '../views/FormView.vue'
 
 const router = createRouter({
@@ -51,6 +52,11 @@ const router = createRouter({
       path: '/contract-generator',
       name: 'ContractGenerator',
       component: ContractGenerator
+    },
+    {
+      path: '/matched',
+      name: 'Matched',
+      component: Matched
     },
   ],
 })

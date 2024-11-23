@@ -6,7 +6,7 @@
     </div>
     <div class="group">
       <ul>
-        <li v-for="student in sortedStudents" :key="student.name" class="student-profile">
+        <li v-for="student in sortedStudents" :key="student.name" class="student-profile" @mouseover="hover = student.name" @mouseleave="hover = null" @click="openMatched(student.name)">
           <div class="profile-details">
             <h4>
               {{ student.name }} -
@@ -50,19 +50,19 @@
         </li>
       </ul>
     </div>
-    <button @click="generateContract" class="generate-contract-button">
-      Neuen Vertrag erstellen
-    </button>
   </div>
 </template>
 
 <script setup lang="ts">
-import { onMounted } from 'vue'
+import { ref, onMounted } from 'vue'
 import { seniors } from '../data/data'
 import { TaskType } from '@/types/TaskType'
 import { StudentWishType } from '@/types/StudentWishType'
 import { usePeople } from '@/stores/PeopleStore'
 import { Senior } from '@/types/Senior'
+
+import { useRouter } from 'vue-router'
+import { useMatchStore } from '@/store/matchStore'
 
 const people = usePeople()
 
@@ -70,22 +70,22 @@ const senior = people.$state.seniors[0]
 
 const sortedStudents = people.$state.students
   .slice()
-  .filter((student) => student.matchPercentage(senior) >= 45)
+  .filter((student) => student.matchPercentage(senior) >= 15)
   .sort((a, b) => {
     return b.matchPercentage(senior) - a.matchPercentage(senior)
   })
 
 const getMatchText = (percentage: number) => {
-  if (percentage >= 85) return 'Sehr gute Übereinstimmung'
-  if (percentage >= 70) return 'Gute Übereinstimmung'
-  if (percentage >= 45) return 'Etwas Übereinstimmung'
+  if (percentage >= 65) return 'Sehr gute Übereinstimmung'
+  if (percentage >= 50) return 'Gute Übereinstimmung'
+  if (percentage >= 15) return 'Etwas Übereinstimmung'
   return 'Wenig Übereinstimmung'
 }
 
 const getMatchClass = (percentage: number) => {
-  if (percentage >= 85) return 'very-good-match'
-  if (percentage >= 70) return 'good-match'
-  if (percentage >= 45) return 'some-match'
+  if (percentage >= 65) return 'very-good-match'
+  if (percentage >= 50) return 'good-match'
+  if (percentage >= 15) return 'some-match'
   return 'low-match'
 }
 
@@ -108,6 +108,15 @@ const sortedWishes = (wishes: string[]) => {
 const generateContract = () => {
   console.log('Generating a new contract...')
   // Add logic to generate a new contract here
+}
+
+const hover = ref<string | null>(null)
+const router = useRouter()
+const matchStore = useMatchStore()
+
+const openMatched = (studentName: string) => {
+  matchStore.setStudentName(studentName)
+  router.push({ name: 'Matched' })
 }
 
 onMounted(() => {
@@ -146,6 +155,13 @@ ul {
   border-radius: 8px;
   background-color: #f9f9f9;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s, box-shadow 0.3s;
+  cursor: pointer;
+}
+
+.student-profile:hover {
+  transform: scale(1.05);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
 
 .profile-image {

@@ -68,7 +68,9 @@ export const seniors = [
     matchPercentage: 80,
     birthdate: '1938-03-27',
     preferredLocation: 'Schwabing',
+    address: 'Am Miep, 80939 München',
     houseLocation: 'Schwabing',
+    roomSize: 12,
     offers: [StudentWishType.StudyRoom, StudentWishType.Garden, StudentWishType.Piano],
     wishes: [TaskType.Housework, TaskType.Maintenance, TaskType.ComputerSkills, TaskType.Companionship],
     allowSmokers: false
