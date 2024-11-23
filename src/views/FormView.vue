@@ -14,8 +14,8 @@
             <input type="text" id="name" v-model="formData.name" placeholder="Name, Vorname" />
           </div>
           <div class="form-group">
-            <label for="name">Adresse</label>
-            <input type="text" id="adresse" v-model="formData.name" placeholder="Straße, PLZ, Ort" />
+            <label for="address">Adresse</label>
+            <input type="text" id="address" v-model="formData.address" placeholder="Straße, PLZ, Ort" />
           </div>
           <div class="form-group">
             <label for="phone">Telefonnummer</label>
@@ -25,80 +25,27 @@
             <label for="birthdate">Geburtsdatum</label>
             <input type="date" id="birthdate" v-model="formData.birthdate" />
           </div>
-          <div class="space-y-4">
-          <div class="flex items-center space-x-8">
-
           <div class="form-group">
             <label for="family">Familienstand</label>
-          
-
-            <label class="flex items-center space-x-2">
-              <input
-                type="radio"
-                value="möbliert"
-                v-model="furnishing"
-                name="furnishing"
-                class="form-radio text-blue-500"
-              />
-              <span>ledig</span>
-            </label>
-            <label class="flex items-center space-x-2">
-              <input
-                type="radio"
-                value="möbliert"
-                v-model="furnishing"
-                name="furnishing"
-                class="form-radio text-blue-500"
-              />
-              <span>in Partnerschaft</span>
-            </label>
-
-            <label class="flex items-center space-x-2">
-              <input
-                type="radio"
-                value="möbliert"
-                v-model="furnishing"
-                name="furnishing"
-                class="form-radio text-blue-500"
-              />
-              <span>geschieden</span>
-            </label>
-            <label class="flex items-center space-x-2">
-              <input
-                type="radio"
-                value="geschieden"
-                v-model="geschieden"
-                name="geschieden"
-                class="form-radio text-blue-500"
-              />
-              <span>verwittwet</span>
-            </label>
+            <Dropdown
+              v-model="formData.relationship"
+              :options="beziehungstypen"
+              id="family"
+              :placeholder="'Bitte auswählen...'"
+            />
           </div>
         </div>
-        </div>
-      </div>
+
         <!-- Präferenzen -->
         <div class="section">
           <h3>Präferenzen</h3>
           <div class="form-group">
             <label>Raucher/in</label>
-            <div class="radio-group">
-              <label>
-                <input type="radio" value="ja" v-model="formData.smoking" /> Ja
-              </label>
-              <label>
-                <input type="radio" value="nein" v-model="formData.smoking" /> Nein
-              </label>
-            </div>
+            <YesNo id="smoking" title="Rauchen Sie?" v-model="formData.smoking" />
+          </div>
+          <div class="form-group">
             <label>Haustiere</label>
-            <div class="radio-group">
-              <label>
-                <input type="radio" value="ja" v-model="formData.smoking" /> Ja
-              </label>
-              <label>
-                <input type="radio" value="nein" v-model="formData.smoking" /> Nein
-              </label>
-            </div>
+            <YesNo id="animals" title="Haben Sie Haustiere?" v-model="formData.animals" />
           </div>
           <div class="form-group">
             <label>Hobbys/Interessen</label>
@@ -106,86 +53,41 @@
           </div>
         </div>
 
-
-         <!-- Wohnraumbeschreibung -->
-         <div class="section">
+        <!-- Wohnraumbeschreibung -->
+        <div class="section">
           <h3>Wohnraumbeschreibung</h3>
           <div class="form-group">
-            <div class="form-group">
             <label for="size">Größe des Wohnraums (in m²)</label>
-            <input type="text" id="size" v-model="formData.phone" placeholder="m²" />
+            <input type="text" id="size" v-model="formData.roomsize" placeholder="m²" />
           </div>
           <div class="form-group">
             <label for="rooms">Anzahl der Zimmer</label>
-            <input type="text" id="rooms" v-model="formData.phone" placeholder="1,2,.." />
+            <input type="text" id="rooms" v-model="formData.rooms" placeholder="1,2,.." />
           </div>
           <div class="form-group">
             <label for="location">Standort der Immobilie</label>
-            <input type="text" id="location" v-model="formData.phone" placeholder="Schwabing, Ismaning,.." />
+            <input type="text" id="location" v-model="formData.place" placeholder="Schwabing, Ismaning,.." />
           </div>
           <div class="form-group">
             <label for="availability">Verfügbarkeit</label>
-            <input type="date" id="availability" v-model="formData.birthdate" />
+            <input type="date" id="availability" v-model="formData.availability" />
+          </div>
+          <div class="form-group">
+            <YesNo id="furniture" title="Ist der Wohnraum möbliert?" v-model="formData.furniture" />
           </div>
         </div>
-          <label>Möbliert</label>
-            <div class="radio-group">
-              <label>
-                <input type="radio" value="ja" v-model="formData.smoking" /> Ja
-              </label>
-              <label>
-                <input type="radio" value="nein" v-model="formData.smoking" /> Nein
-              </label>
 
-            </div>
-        </div>
-
-
-
-
-         <!-- Wohnpartnerschaft -->
-         <div class="section">
+        <!-- Wohnpartnerschaft -->
+        <div class="section">
           <h3>Wohnpartnerschaft</h3>
-
-          <div class="form-group"></div>
-          <label>Bevorzugtes Geschlecht</label>
-            <div class="radio-group">
-              <label>
-                <input type="radio" value="maennlich" v-model="formData.smoking" /> männlich
-              </label>
-              <label>
-                <input type="radio" value="weiblich" v-model="formData.smoking" /> weiblich
-              </label>
-              <label>
-                <input type="radio" value="egal" v-model="formData.smoking" /> egal
-              </label>
-
-            </div>
-            <div class="form-group"></div>
-
-            <label>Raucher</label>
-            <div class="radio-group">
-              <label>
-                <input type="radio" value="ja" v-model="formData.smoking" /> Ja
-              </label>
-              <label>
-                <input type="radio" value="nein" v-model="formData.smoking" /> Nein
-              </label>
-            </div>
-            <div class="form-group"></div>
-
-            <label>Führerschein</label>
-            <div class="radio-group">
-              <label>
-                <input type="radio" value="ja" v-model="formData.smoking" /> Ja
-              </label>
-              <label>
-                <input type="radio" value="nein" v-model="formData.smoking" /> Nein
-              </label>
-            </div>          
+          <div class="form-group">
+            <YesNo id="gender" title="Bevorzugen Sie ein bestimmtes Geschlecht?" v-model="formData.gender" />
+          </div>
+          <div class="form-group">
+          
+            <YesNo id="license" title="Ist ein Führerschein notwendig?" v-model="formData.license" />
+          </div>
         </div>
-
-
 
         <!-- Tätigkeiten und Wünsche -->
         <div class="section">
@@ -223,22 +125,33 @@
 
 <script setup lang="ts">
 import { ref } from 'vue';
+import YesNo from '../components/forms/fields/YesNo.vue';
+import Dropdown from '../components/forms/fields/Dropdown.vue';
 
-// Beispiel-Daten für Tätigkeiten und Wünsche
+// Daten für Tätigkeiten, Wünsche und Familienstand
 const tasks = ref(['Hausarbeit', 'Gartenarbeit', 'Begleitdienste', 'PC-Kenntnisse', 'Gesellschaft leisten']);
 const wishes = ref(['Eigenes Zimmer', 'Kochmöglichkeiten', 'Ruhezeiten', 'Freizeitaktivitäten']);
+const beziehungstypen = ['ledig', 'verheiratet', 'verwittwet'].sort();
 
 // Formular-Daten
 const formData = ref({
   name: '',
   phone: '',
+  address: '',
   birthdate: '',
-  nationality: '',
-  religion: '',
+  relationship: '',
   smoking: '',
+  animals: '',
   hobbies: '',
+  roomsize: '',
+  rooms: '',
+  place: '',
+  availability: '',
+  furniture: '',
+  gender: '',
+  license: '',
   offeredTasks: [],
-  desiredWishes: []
+  desiredWishes: [],
 });
 
 // Formular absenden
@@ -295,11 +208,6 @@ h2 {
   margin-top: 1rem;
 }
 
-.radio-group {
-  display: flex;
-  gap: 1rem;
-}
-
 textarea,
 input[type='text'],
 input[type='date'] {
@@ -307,7 +215,6 @@ input[type='date'] {
   border: 1px solid #ccc;
   border-radius: 4px;
   width: 100%;
-  max-width: 400px;
 }
 
 .dot-list {
