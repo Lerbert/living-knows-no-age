@@ -9,9 +9,9 @@
         <li v-for="student in students" :key="student.id" class="student-profile">
           <div class="profile-details">
             <h4>{{ student.name }} - <span :class="getMatchClass(student.matchPercentage)">{{ getMatchText(student.matchPercentage) }}</span></h4>
-            <p><strong>Alter:</strong> {{ student.age }}</p>
+            <p><strong>Alter:</strong> {{ calculateAge(student.birthdate) }}</p>
             <p><strong>Studienfach:</strong> {{ student.fieldOfStudy }}</p>
-            <p><strong>Bevorzugter Standort:</strong> {{ student.preferredLocation }}</p>
+            <p><strong>Bevorzugter Standort:</strong> <span :class="{ 'preferred-location': student.preferredLocation === 'Schwabing' }">{{ student.preferredLocation }}</span></p>
             <p><strong>Raucher:</strong> <span :class="{ 'no-smoking': student.smoker && !seniors[0].allowSmokers }">{{ student.smoker ? 'Ja' : 'Nein' }}</span></p>
             <p><strong>Hobbys:</strong> {{ student.hobbies.join(', ') }}</p>
             <p><strong>Bietet:</strong></p>
@@ -31,88 +31,26 @@
         </li>
       </ul>
     </div>
-    <div class="registration-link">
-      <p>Interessiert? <a href="/student-registration">Hier registrieren</a></p>
-    </div>
+    <button @click="generateContract" class="generate-contract-button">Neuen Vertrag erstellen</button>
   </div>
 </template>
 
 <script setup lang="ts">
 import { ref, onMounted } from 'vue'
-import MaximilianBauerImage from '../images/MaximilianBauer.jpg'
-import LenaMuellerImage from '../images/LenaMueller.jpg'
-import FelixFabelhaftImage from '../images/FelixFabelhaft.jpg'
-import SophieSchneiderImage from '../images/SophieSchneider.jpg'
-import { TaskType } from '../types/TaskType'
-import { StudentWishType } from '../types/StudentWishType'
+import { students, seniors } from '../data/data'
+import type { TaskType } from '@/types/TaskType';
+import type { StudentWishType } from '@/types/StudentWishType';
 
-const students = ref([
-  {
-    id: 1,
-    name: 'Felix Fabelhaft',
-    matchPercentage: 95,
-    age: 19,
-    fieldOfStudy: 'Architektur',
-    preferredLocation: 'Maxvorstadt',
-    smoker: false,
-    hobbies: ['Klavier spielen', 'singen', 'wandern'],
-    offers: [TaskType.Housework, TaskType.Maintenance, TaskType.Companionship],
-    wishes: [StudentWishType.Cook, StudentWishType.Piano],
-    image: FelixFabelhaftImage
-  },
-  {
-    id: 2,
-    name: 'Lina Jung',
-    matchPercentage: 89,
-    age: 21,
-    fieldOfStudy: 'Informatik',
-    preferredLocation: 'Schwabing',
-    smoker: false,
-    hobbies: ['programmieren', 'lesen', 'radfahren'],
-    offers: [TaskType.ComputerSkills, TaskType.Handicrafts, TaskType.Companionship],
-    wishes: [StudentWishType.StudyRoom],
-    image: LenaMuellerImage
-  },
-  {
-    id: 3,
-    name: 'Maximilian Bauer',
-    matchPercentage: 89,
-    age: 22,
-    fieldOfStudy: 'Maschinenbau',
-    preferredLocation: 'Garching',
-    smoker: false,
-    hobbies: ['3D-Druck', 'Robotik', 'joggen'],
-    offers: [TaskType.Maintenance, TaskType.Gardening, TaskType.Companionship],
-    wishes: [StudentWishType.Workshop, StudentWishType.Garden],
-    image: MaximilianBauerImage
-  },
-  {
-    id: 4,
-    name: 'Sophie Schneider',
-    matchPercentage: 53,
-    age: 20,
-    fieldOfStudy: 'Medizin',
-    preferredLocation: 'Haidhausen',
-    smoker: true,
-    hobbies: ['ehrenamtliche Arbeit', 'malen', 'Yoga'],
-    offers: [TaskType.EscortServices, TaskType.Companionship],
-    wishes: [StudentWishType.StudyRoom],
-    image: SophieSchneiderImage // Update this line
+const calculateAge = (birthdate: string) => {
+  const birthDate = new Date(birthdate)
+  const today = new Date('2024-11-01')
+  let age = today.getFullYear() - birthDate.getFullYear()
+  const monthDiff = today.getMonth() - birthDate.getMonth()
+  if (monthDiff < 0 || (monthDiff === 0 && today.getDate() < birthDate.getDate())) {
+    age--
   }
-])
-
-const seniors = ref([
-  {
-    id: 5,
-    name: 'Gertrud Gabel',
-    matchPercentage: 80,
-    age: 86,
-    preferredLocation: 'Schwabing',
-    offers: [StudentWishType.StudyRoom, StudentWishType.Garden],
-    wishes: [TaskType.Housework, TaskType.Maintenance, TaskType.ComputerSkills, TaskType.Companionship],
-    allowSmokers: false
-  }
-])
+  return age
+}
 
 const getMatchText = (percentage: number) => {
   if (percentage >= 90) return 'Sehr gute Übereinstimmung'
@@ -130,18 +68,23 @@ const getMatchClass = (percentage: number) => {
 
 const sortedOffers = (offers: string[]) => {
   return offers.slice().sort((a, b) => {
-    const aMatch = seniors.value[0].wishes.includes(a as TaskType)
-    const bMatch = seniors.value[0].wishes.includes(b as TaskType)
+    const aMatch = seniors[0].wishes.includes(a as TaskType)
+    const bMatch = seniors[0].wishes.includes(b as TaskType)
     return (aMatch === bMatch) ? 0 : aMatch ? -1 : 1
   })
 }
 
 const sortedWishes = (wishes: string[]) => {
   return wishes.slice().sort((a, b) => {
-    const aMatch = seniors.value[0].offers.includes(a as StudentWishType)
-    const bMatch = seniors.value[0].offers.includes(b as StudentWishType)
+    const aMatch = seniors[0].offers.includes(a as StudentWishType)
+    const bMatch = seniors[0].offers.includes(b as StudentWishType)
     return (aMatch === bMatch) ? 0 : aMatch ? -1 : 1
   })
+}
+
+const generateContract = () => {
+  console.log('Generating a new contract...')
+  // Add logic to generate a new contract here
 }
 
 onMounted(() => {
@@ -249,6 +192,25 @@ p {
 
 .no-smoking {
   color: red;
+}
+
+.generate-contract-button {
+  padding: 0.5rem 1rem;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  margin-top: 1rem;
+}
+
+.generate-contract-button:hover {
+  background-color: #0056b3;
+}
+
+.preferred-location {
+    font-weight: bold;
+  color: darkgreen;
 }
 </style>
 

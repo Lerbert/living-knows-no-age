@@ -30,6 +30,12 @@
           <li class="nav-item">
             <RouterLink class="nav-link" to="/student-registration">Student Registration</RouterLink>
           </li>
+          <li class="nav-item">
+            <RouterLink class="nav-link" to="/contract-creation">Vertrag erstellen</RouterLink>
+          </li>
+          <li class="nav-item">
+            <RouterLink class="nav-link" to="/contract-generator">Vertrag erstellen</RouterLink>
+          </li>
         </ul>
         <form class="d-flex">
           <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search" />
