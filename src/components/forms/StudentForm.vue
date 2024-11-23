@@ -23,6 +23,18 @@
           </div>
         </div>
         <div class="form-group row">
+          <label for="location" class="form-label">Bevorzugter Standort</label>
+          <div class="">
+            <Dropdown
+              v-model="answers.preferredLocation"
+              id="location"
+              :placeholder="'Bitte wählen Sie'"
+              :options="locations"
+              :disabled="false"
+            />
+          </div>
+        </div>
+        <div class="form-group row">
           <label for="nationality" class="form-label">Nationalität</label>
           <div class="">
             <Dropdown
@@ -35,16 +47,19 @@
           </div>
         </div>
         <div class="form-group row">
-          <YesNoText
-            id="student"
-            title="Studieren Sie derzeit?"
-            :options="fachrichtungen"
-            placeholder="Fachrichtung"
-            v-model="answers.student"
-          />
+          <label for="student" class="form-label">Studienfach</label>
+          <div class="">
+            <Dropdown
+              v-model="answers.fieldOfStudy"
+              id="student"
+              :placeholder="'Bitte wählen Sie'"
+              :options="fachrichtungen"
+              :disabled="false"
+            />
+          </div>
         </div>
         <div class="form-group row">
-          <YesNo id="raucher" title="Rauchen Sie?" v-model="answers.raucher" />
+          <YesNo id="raucher" title="Rauchen Sie?" v-model="answers.smoker" />
         </div>
         <div class="form-group row">
           <label for="phone" class="form-label">Hobbies</label>
@@ -59,7 +74,7 @@
       <div v-if="currentStage === Stage.Tasks">
         <h3>Hilfeleistungen, die Sie anbieten können</h3>
         <div class="form-group row" v-for="task in Object.values(TaskType)" :key="task">
-          <YesNo :id="task" :title="task" v-model="answers.tasks[task]" />
+          <YesNo :id="task" :title="task" v-model="answers.offers[task]" />
         </div>
         <div class="btn-group" role="group">
           <button
@@ -97,7 +112,6 @@
 
 <script setup lang="ts">
 import { ref } from 'vue'
-import YesNoText from './fields/YesNoText.vue'
 import Dropdown from './fields/Dropdown.vue'
 import YesNo from './fields/YesNo.vue'
 import { StudentWishType } from '@/types/StudentWishType'
@@ -108,12 +122,13 @@ import { Student } from '@/types/Student'
 interface Answer {
   name: string | null
   phone: string | null
-  birthday: Date | null
+  birthday: string | null
+  fieldOfStudy: string | null
+  preferredLocation: string | null
   nationality: string | null
-  student: string | null
-  raucher: boolean | null
+  smoker: boolean | null
   hobbies: string | null
-  tasks: Record<TaskType, boolean | null>
+  offers: Record<TaskType, boolean | null>
   wishes: Record<StudentWishType, boolean | null>
 }
 
@@ -124,6 +139,8 @@ enum Stage {
 }
 
 let currentStage = ref<Stage>(Stage.PersonalData)
+
+const locations = ['Schwabing', 'Haidhausen', 'Maxvorstadt', 'Garching']
 
 const nationalities = [
   'Deutsch',
@@ -148,32 +165,7 @@ const nationalities = [
   'Bulgarisch',
   'Griechisch',
   'Türkisch',
-  'Russisch',
-  'Ukrainisch',
-  'Chinesisch',
-  'Japanisch',
-  'Koreanisch',
-  'Indisch',
-  'Pakistanisch',
-  'Afghanisch',
-  'Iranisch',
-  'Irakisch',
-  'Syrisch',
-  'Libanesisch',
-  'Israelisch',
-  'Ägyptisch',
-  'Marokkanisch',
-  'Tunesisch',
-  'Algerisch',
-  'Kanadisch',
-  'Amerikanisch',
-  'Mexikanisch',
-  'Brasilianisch',
-  'Argentinisch',
-  'Chilenisch',
-  'Australisch',
-  'Neuseeländisch',
-]
+].sort()
 
 const fachrichtungen = [
   'Informatik',
@@ -188,32 +180,33 @@ const fachrichtungen = [
 const answers = ref<Answer>({
   name: null,
   phone: null,
-  nationality: null,
-  raucher: null,
-  student: null,
   birthday: null,
+  fieldOfStudy: null,
+  preferredLocation: null,
+  nationality: null,
+  smoker: null,
   hobbies: null,
-  tasks: {} as Record<TaskType, boolean | null>,
+  offers: {} as Record<TaskType, boolean | null>,
   wishes: {} as Record<StudentWishType, boolean | null>,
 })
 
 const students = usePeople()
 
 const submitForm = () => {
-  const acceptedTasks = Object.entries(answers.value.tasks)
+  const acceptedTasks = Object.entries(answers.value.offers)
     .filter(([, value]) => value === true)
-    .map(([key]) => key)
+    .map(([key]) => key as TaskType)
   const acceptedWishes = Object.entries(answers.value.wishes)
     .filter(([, value]) => value === true)
-    .map(([key]) => key)
+    .map(([key]) => key as StudentWishType)
   const student = new Student(
     answers.value.name ?? '',
     answers.value.phone ?? '',
-    answers.value.birthday ?? new Date(),
-    'fach',
-    'standort',
+    new Date(answers.value.birthday ?? ''),
+    answers.value.fieldOfStudy ?? '',
+    answers.value.preferredLocation ?? '',
     answers.value.nationality ?? '',
-    answers.value.raucher ?? false,
+    answers.value.smoker ?? false,
     [answers.value.hobbies ?? ''],
     acceptedTasks,
     acceptedWishes,
