@@ -6,9 +6,21 @@ import MaximilianBauerImage from '../images/MaximilianBauer.jpg'
 import LenaMuellerImage from '../images/LenaMueller.jpg'
 import FelixFabelhaftImage from '../images/FelixFabelhaft.jpg'
 import SophieSchneiderImage from '../images/SophieSchneider.jpg'
+import { Senior } from '@/types/Senior'
 
-export const useStudents = defineStore('todos', {
+export const usePeople = defineStore('people', {
   state: () => ({
+    seniors: [
+      new Senior(
+        'Gertrud Gabel',
+        '+49 89 2784331',
+        new Date('1938-03-27'),
+        'Schwabing',
+        [StudentWishType.StudyRoom, StudentWishType.Garden, StudentWishType.Piano],
+        [TaskType.Housework, TaskType.Maintenance, TaskType.ComputerSkills, TaskType.Companionship],
+        false,
+      ),
+    ],
     students: [
       new Student(
         'Felix Fabelhaft',

@@ -102,7 +102,7 @@ import Dropdown from './fields/Dropdown.vue'
 import YesNo from './fields/YesNo.vue'
 import { StudentWishType } from '@/types/StudentWishType'
 import { TaskType } from '@/types/TaskType'
-import { useStudents } from '@/stores/StudentStore'
+import { usePeople } from '@/stores/PeopleStore'
 import { Student } from '@/types/Student'
 
 interface Answer {
@@ -197,7 +197,7 @@ const answers = ref<Answer>({
   wishes: {} as Record<StudentWishType, boolean | null>,
 })
 
-const students = useStudents()
+const students = usePeople()
 
 const submitForm = () => {
   const acceptedTasks = Object.entries(answers.value.tasks)

@@ -6,7 +6,7 @@
     </div>
     <div class="group">
       <ul>
-        <li v-for="student in students.$state.students" :key="student.name" class="student-profile">
+        <li v-for="student in sortedStudents" :key="student.name" class="student-profile">
           <div class="profile-details">
             <h4>
               {{ student.name }} -
@@ -61,32 +61,31 @@ import { onMounted } from 'vue'
 import { seniors } from '../data/data'
 import { TaskType } from '@/types/TaskType'
 import { StudentWishType } from '@/types/StudentWishType'
-import { useStudents } from '@/stores/StudentStore'
+import { usePeople } from '@/stores/PeopleStore'
 import { Senior } from '@/types/Senior'
 
-const students = useStudents()
+const people = usePeople()
 
-const senior = new Senior(
-  'Gertrud Gabel',
-  '+49 89 2784331',
-  new Date('1938-03-27'),
-  'Schwabing',
-  [StudentWishType.StudyRoom, StudentWishType.Garden, StudentWishType.Piano],
-  [TaskType.Housework, TaskType.Maintenance, TaskType.ComputerSkills, TaskType.Companionship],
-  false,
-)
+const senior = people.$state.seniors[0]
+
+const sortedStudents = people.$state.students
+  .slice()
+  .filter((student) => student.matchPercentage(senior) >= 45)
+  .sort((a, b) => {
+    return b.matchPercentage(senior) - a.matchPercentage(senior)
+  })
 
 const getMatchText = (percentage: number) => {
-  if (percentage >= 90) return 'Sehr gute Übereinstimmung'
-  if (percentage >= 75) return 'Gute Übereinstimmung'
-  if (percentage >= 50) return 'Etwas Übereinstimmung'
+  if (percentage >= 85) return 'Sehr gute Übereinstimmung'
+  if (percentage >= 70) return 'Gute Übereinstimmung'
+  if (percentage >= 45) return 'Etwas Übereinstimmung'
   return 'Wenig Übereinstimmung'
 }
 
 const getMatchClass = (percentage: number) => {
-  if (percentage >= 90) return 'very-good-match'
-  if (percentage >= 75) return 'good-match'
-  if (percentage >= 50) return 'some-match'
+  if (percentage >= 85) return 'very-good-match'
+  if (percentage >= 70) return 'good-match'
+  if (percentage >= 45) return 'some-match'
   return 'low-match'
 }
 
