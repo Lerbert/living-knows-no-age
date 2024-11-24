@@ -1,7 +1,10 @@
 <template>
   <nav class="navbar navbar-expand-lg navbar-light bg-light">
     <div class="container-fluid">
-      <a class="navbar-brand" href="#">Navbar</a>
+      <RouterLink class="navbar-brand" to="/living-knows-no-age">
+        <img src="@/images/match.jpg" width="30" height="30" class="d-inline-block align-top" />
+        LivingKnowsNoAge
+      </RouterLink>
       <button
         class="navbar-toggler"
         type="button"
@@ -15,9 +18,9 @@
       </button>
       <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-          <li class="nav-item">
-            <RouterLink class="nav-link" to="/living-knows-no-age">Home</RouterLink>
-          </li>
+          <!-- <li class="nav-item">
+            <RouterLink class="nav-link" to="/living-knows-no-age">Start</RouterLink>
+          </li> -->
           <li class="nav-item dropdown">
             <a
               class="nav-link dropdown-toggle"
@@ -43,18 +46,30 @@
             </ul>
           </li>
           <li class="nav-item">
-            <RouterLink class="nav-link" to="/matching-results">Matching Results</RouterLink>
+            <RouterLink class="nav-link" to="/matching-results">Matching</RouterLink>
           </li>
           <li class="nav-item">
             <RouterLink class="nav-link" to="/contract-creation">Vertrag erstellen</RouterLink>
           </li>
-          <li class="nav-item">
-            <RouterLink class="nav-link" to="/living-knows-no-age">Living Knows No Age</RouterLink>
-          </li>
         </ul>
         <form class="d-flex">
-          <input class="form-control me-2" type="search" placeholder="Suche" aria-label="Suche" />
-          <button class="btn btn-outline-success" type="submit">Suche</button>
+          <div class="input-group">
+            <input class="form-control" type="search" placeholder="Suche" aria-label="Suche" />
+            <button class="btn btn-outline-success" type="submit">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="16"
+                height="16"
+                fill="currentColor"
+                class="bi bi-search"
+                viewBox="0 0 16 16"
+              >
+                <path
+                  d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001q.044.06.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1 1 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0"
+                />
+              </svg>
+            </button>
+          </div>
         </form>
       </div>
     </div>

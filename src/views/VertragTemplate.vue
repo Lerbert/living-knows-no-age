@@ -5,20 +5,27 @@
     <p>Gertrud Gabel</p>
     <h2>Mieter</h2>
     <p>Felix Fabelhaft</p>
-    <p> </p>
+    <p></p>
     <p>Zwischen dem Mieter und dem Vermieter wird folgender Mietvertrag geschlossen.</p>
-    
+
     <h2>Mietobjekt</h2>
-    <p>Ein Zimmer im Anwesen {{ senior.address }}
-Sowie Mitbenutzung von Küche, Bad und Gemeinschaftsraum.
-Zimmergröße: {{ senior.roomSize }} m²
-Das Zimmer ist möbliert.</p>
+    <p>
+      Ein Zimmer im Anwesen {{ senior.address }} Sowie Mitbenutzung von Küche, Bad und
+      Gemeinschaftsraum. Zimmergröße: {{ senior.roomSize }} m² Das Zimmer ist möbliert.
+    </p>
 
     <h2>Nebenkosten</h2>
-    <p>Die Nebenkosten betragen 80€. In den Nebenkosten ist die Beteiligung an folgenden Kosten enthalten:</p>
-    <p>Gas (Heizung, Warmwasser), elektrischer Strom, Wasser, Abwasser, Grundsteuer, Versicherung, Kaminkehrer, Wartung der Heizung, Müllentsorgung, W-LAN, Rundfunkgebühr. Der Mieter verpflichtet sich mit Heizung, Warmwasser und Strom angemessen sparsam umzugehen.</p>
-    
-    <h2>Aufgaben des Mieters:</h2>
+    <p>
+      Die Nebenkosten betragen 80€. In den Nebenkosten ist die Beteiligung an folgenden Kosten
+      enthalten:
+    </p>
+    <p>
+      Gas (Heizung, Warmwasser), elektrischer Strom, Wasser, Abwasser, Grundsteuer, Versicherung,
+      Kaminkehrer, Wartung der Heizung, Müllentsorgung, W-LAN, Rundfunkgebühr. Der Mieter
+      verpflichtet sich mit Heizung, Warmwasser und Strom angemessen sparsam umzugehen.
+    </p>
+
+    <h2>Aufgaben des Mieters ({{ senior.roomSize }} h/Monat):</h2>
     <ul>
       <li v-for="offer in matchedOffers" :key="offer">{{ offer }}</li>
     </ul>
@@ -26,10 +33,13 @@ Das Zimmer ist möbliert.</p>
     <ul>
       <li v-for="wish in senior.offers" :key="wish">{{ wish }}</li>
     </ul>
-    
+
     <h2>Kündigung</h2>
-    <p>Die Kündigungsfrist beträgt 3 Monate. Während der Probezeit, die sich über die ersten vier Wochen erstreckt, beträgt die Kündigungsfrist eine Woche.</p>
-    
+    <p>
+      Die Kündigungsfrist beträgt 3 Monate. Während der Probezeit, die sich über die ersten vier
+      Wochen erstreckt, beträgt die Kündigungsfrist eine Woche.
+    </p>
+
     <h2>Unterschriften</h2>
     <div class="row">
       <div class="col-md-6">
@@ -49,7 +59,7 @@ import { students, seniors } from '../data/data'
 const student = students[0]
 const senior = seniors[0]
 
-const matchedOffers = ref(student.offers.filter(offer => senior.wishes.includes(offer)))
+const matchedOffers = ref(student.offers.filter((offer) => senior.wishes.includes(offer)))
 
 const formatDate = (date: string) => {
   const options: Intl.DateTimeFormatOptions = { year: 'numeric', month: '2-digit', day: '2-digit' }
@@ -67,7 +77,8 @@ const formatDate = (date: string) => {
   text-align: center;
 }
 
-h1, h2 {
+h1,
+h2 {
   color: #333;
 }
 

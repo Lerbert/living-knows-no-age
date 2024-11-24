@@ -188,14 +188,20 @@ const answers = ref<Answer>({
   nationality: null,
   nonsmoker: null,
   hobbies: null,
-  offers: Object.values(TaskType).reduce((acc, task) => {
-    acc[task] = false
-    return acc
-  }, {} as Record<TaskType, boolean>),
-  wishes: Object.values(StudentWishType).reduce((acc, wish) => {
-    acc[wish] = false
-    return acc
-  }, {} as Record<StudentWishType, boolean>),
+  offers: Object.values(TaskType).reduce(
+    (acc, task) => {
+      acc[task] = false
+      return acc
+    },
+    {} as Record<TaskType, boolean>,
+  ),
+  wishes: Object.values(StudentWishType).reduce(
+    (acc, wish) => {
+      acc[wish] = false
+      return acc
+    },
+    {} as Record<StudentWishType, boolean>,
+  ),
 })
 
 const students = usePeople()
@@ -223,7 +229,7 @@ const submitForm = () => {
     DefaultImage,
   )
   students.addStudent(student)
-  router.push('/')
+  router.push('/senior-registration')
 }
 </script>
 
