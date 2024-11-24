@@ -36,7 +36,7 @@
                 </RouterLink>
               </li>
               <li>
-                <RouterLink class="dropdown-item" to="/older-person-registration">
+                <RouterLink class="dropdown-item" to="/senior-registration">
                   Wohnraumgebende
                 </RouterLink>
               </li>

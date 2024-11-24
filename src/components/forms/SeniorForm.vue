@@ -1,6 +1,6 @@
 <template>
   <div class="form-container">
-    <h2>Registrierung für Wohnraumsuchende</h2>
+    <h2>Registrierung für Wohnraumgebende</h2>
     <form @submit.prevent="submitForm">
       <div v-if="currentStage === Stage.PersonalData">
         <h3>Persönliche Daten</h3>
@@ -23,7 +23,7 @@
           </div>
         </div>
         <div class="form-group row">
-          <label for="location" class="form-label">Bevorzugter Standort</label>
+          <label for="location" class="form-label">Standort</label>
           <div class="">
             <Dropdown
               v-model="answers.preferredLocation"
@@ -35,44 +35,20 @@
           </div>
         </div>
         <div class="form-group row">
-          <label for="nationality" class="form-label">Nationalität</label>
-          <div class="">
-            <Dropdown
-              v-model="answers.nationality"
-              id="nationality"
-              :placeholder="'Bitte wählen Sie'"
-              :options="nationalities"
-              :disabled="false"
-            />
-          </div>
-        </div>
-        <div class="form-group row">
-          <label for="student" class="form-label">Studienfach</label>
-          <div class="">
-            <Dropdown
-              v-model="answers.fieldOfStudy"
-              id="student"
-              :placeholder="'Bitte wählen Sie'"
-              :options="fachrichtungen"
-              :disabled="false"
-            />
-          </div>
-        </div>
-        <div class="form-group row">
           <label for="phone" class="form-label">Hobbies</label>
           <div class="">
             <input type="text" class="form-control" id="phone" v-model="answers.hobbies" />
           </div>
         </div>
         <div class="form-group row">
-          <YesNo id="raucher" title="Sind Sie Nichtraucher?" v-model="answers.nonsmoker" />
+          <YesNo id="raucher" title="Würden Sie Raucher aufnehmen?" v-model="answers.smoker" />
         </div>
         <button type="button" class="btn btn-primary" @click="currentStage = Stage.Tasks">
           Weiter
         </button>
       </div>
       <div v-if="currentStage === Stage.Tasks">
-        <h3>Hilfeleistungen, die Sie anbieten können</h3>
+        <h3>Gewünschte Hilfeleistungen</h3>
         <div class="form-group row" v-for="task in Object.values(TaskType)" :key="task">
           <YesNo :id="task" :title="task" v-model="answers.offers[task]" />
         </div>
@@ -90,7 +66,18 @@
         </div>
       </div>
       <div v-if="currentStage === Stage.Wishes">
-        <h3>Wünsche zur Wohnpartnerschaft</h3>
+        <h3>Eigenschaften der Wohnung</h3>
+        <div class="form-group">
+          <label for="size">Größe des Wohnraums (in m²)</label>
+          <input type="number" id="size" placeholder="m²" />
+        </div>
+        <div class="form-group">
+          <label for="rooms">Anzahl der Zimmer</label>
+          <input type="number" id="rooms" />
+        </div>
+        <div class="form-group">
+          <YesNo id="furniture" title="Ist der Wohnraum möbliert?" />
+        </div>
         <div class="form-group row" v-for="wish in Object.values(StudentWishType)" :key="wish">
           <YesNo :id="wish" :title="wish" v-model="answers.wishes[wish]" />
         </div>
@@ -128,7 +115,7 @@ interface Answer {
   fieldOfStudy: string | null
   preferredLocation: string | null
   nationality: string | null
-  nonsmoker: boolean | null
+  smoker: boolean | null
   hobbies: string | null
   offers: Record<TaskType, boolean | null>
   wishes: Record<StudentWishType, boolean | null>
@@ -186,38 +173,16 @@ const answers = ref<Answer>({
   fieldOfStudy: null,
   preferredLocation: null,
   nationality: null,
-  nonsmoker: null,
+  smoker: null,
   hobbies: null,
   offers: {} as Record<TaskType, boolean | null>,
   wishes: {} as Record<StudentWishType, boolean | null>,
 })
 
-const students = usePeople()
-
 const router = useRouter()
 
 const submitForm = () => {
-  const acceptedTasks = Object.entries(answers.value.offers)
-    .filter(([, value]) => value === true)
-    .map(([key]) => key as TaskType)
-  const acceptedWishes = Object.entries(answers.value.wishes)
-    .filter(([, value]) => value === true)
-    .map(([key]) => key as StudentWishType)
-  const student = new Student(
-    answers.value.name ?? '',
-    answers.value.phone ?? '',
-    new Date(answers.value.birthday ?? ''),
-    answers.value.fieldOfStudy ?? '',
-    answers.value.preferredLocation ?? '',
-    answers.value.nationality ?? '',
-    !(answers.value.nonsmoker ?? true),
-    [answers.value.hobbies ?? ''],
-    acceptedTasks,
-    acceptedWishes,
-    DefaultImage,
-  )
-  students.addStudent(student)
-  router.push('/')
+  router.push('/matching-results')
 }
 </script>
 

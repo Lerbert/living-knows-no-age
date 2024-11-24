@@ -1,6 +1,7 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import HomeView from '../views/HomeView.vue'
 import StudentRegistration from '../components/StudentRegistration.vue'
+import SeniorRegistration from '../components/SeniorRegistration.vue'
 import MatchingResults from '../views/MatchingResults.vue'
 import ContractCreation from '../views/ContractCreation.vue'
 import ContractGenerator from '../views/ContractGenerator.vue'
@@ -26,22 +27,22 @@ const router = createRouter({
     {
       path: '/student-registration',
       name: 'StudentRegistration',
-      component: StudentRegistration
+      component: StudentRegistration,
     },
     {
       path: '/matching-results',
       name: 'MatchingResults',
-      component: MatchingResults
+      component: MatchingResults,
     },
     {
       path: '/contract-creation',
       name: 'ContractCreation',
-      component: ContractCreation
+      component: ContractCreation,
     },
     {
-      path: '/older-person-registration',
-      name: 'OlderPersonRegistration',
-      component: OlderPersonRegistration
+      path: '/senior-registration',
+      name: 'SeniorRegistration',
+      component: SeniorRegistration,
     },
     {
       path: '/profile',
@@ -51,12 +52,12 @@ const router = createRouter({
     {
       path: '/contract-generator',
       name: 'ContractGenerator',
-      component: ContractGenerator
+      component: ContractGenerator,
     },
     {
       path: '/matched',
       name: 'Matched',
-      component: Matched
+      component: Matched,
     },
   ],
 })
