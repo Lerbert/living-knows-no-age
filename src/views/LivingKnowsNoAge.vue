@@ -1,7 +1,7 @@
 <template>
   <div class="matched-page">
     <h1 class="title">Living knows no age!</h1>
-    <img src="../images/match.jpg" alt="Match Image" class="match-image" />
+    <img src="../images/match6.jpg" alt="Match Image" class="match-image" />
     <p class="description">
       Our platform connects students looking for affordable housing with seniors who have extra space. 
       We believe in fostering intergenerational relationships and creating mutually beneficial living arrangements.

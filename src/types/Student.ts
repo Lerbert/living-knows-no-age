@@ -33,6 +33,6 @@ export class Student {
     const seniorWishes = senior.wishes.filter((wish) => this.offers.includes(wish)).length
     const studentWishes = this.wishes.filter((wish) => senior.offers.includes(wish)).length
     const wishes = (seniorWishes + studentWishes) / (this.wishes.length + senior.wishes.length)
-    return (0.2 * smoke + 0.6 * wishes + 0.2 * location) * 100
+    return (0.3 * smoke + 0.6 * wishes + 0.1 * location) * 100
   }
 }

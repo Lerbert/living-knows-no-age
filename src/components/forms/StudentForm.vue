@@ -188,8 +188,14 @@ const answers = ref<Answer>({
   nationality: null,
   nonsmoker: null,
   hobbies: null,
-  offers: {} as Record<TaskType, boolean | null>,
-  wishes: {} as Record<StudentWishType, boolean | null>,
+  offers: Object.values(TaskType).reduce((acc, task) => {
+    acc[task] = false
+    return acc
+  }, {} as Record<TaskType, boolean>),
+  wishes: Object.values(StudentWishType).reduce((acc, wish) => {
+    acc[wish] = false
+    return acc
+  }, {} as Record<StudentWishType, boolean>),
 })
 
 const students = usePeople()

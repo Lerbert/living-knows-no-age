@@ -45,7 +45,7 @@ export const usePeople = defineStore('people', {
         false,
         ['programmieren', 'lesen', 'radfahren'],
         [TaskType.ComputerSkills, TaskType.Handicrafts, TaskType.Companionship],
-        [StudentWishType.StudyRoom],
+        [StudentWishType.Workshop],
         LenaMuellerImage,
       ),
       new Student(
