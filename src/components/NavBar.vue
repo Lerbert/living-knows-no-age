@@ -16,7 +16,7 @@
       <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav me-auto mb-2 mb-lg-0">
           <li class="nav-item">
-            <RouterLink class="nav-link" to="/">Home</RouterLink>
+            <RouterLink class="nav-link" to="/living-knows-no-age">Home</RouterLink>
           </li>
           <li class="nav-item dropdown">
             <a
@@ -47,6 +47,9 @@
           </li>
           <li class="nav-item">
             <RouterLink class="nav-link" to="/contract-creation">Vertrag erstellen</RouterLink>
+          </li>
+          <li class="nav-item">
+            <RouterLink class="nav-link" to="/living-knows-no-age">Living Knows No Age</RouterLink>
           </li>
         </ul>
         <form class="d-flex">

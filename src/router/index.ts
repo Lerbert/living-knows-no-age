@@ -7,6 +7,7 @@ import ContractCreation from '../views/ContractCreation.vue'
 import ContractGenerator from '../views/ContractGenerator.vue'
 import Matched from '../views/Matched.vue'
 import OlderPersonRegistration from '../views/FormView.vue'
+import LivingKnowsNoAge from '../views/LivingKnowsNoAge.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -58,6 +59,11 @@ const router = createRouter({
       path: '/matched',
       name: 'Matched',
       component: Matched,
+    },
+    {
+      path: '/living-knows-no-age',
+      name: 'LivingKnowsNoAge',
+      component: LivingKnowsNoAge,
     },
   ],
 })
